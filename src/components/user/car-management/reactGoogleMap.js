@@ -11,8 +11,8 @@ class googleMapComponent extends React.Component {
     this.setState({
       data: {
         destination: {
-          latitude: "37.759703",
-          longitude: "-122.428093"
+          latitude: "37.338207",
+          longitude: "-121.886330"
         }
       }
     });
@@ -23,8 +23,8 @@ class googleMapComponent extends React.Component {
     this.setState({
       data: {
         destination: {
-          latitude: "37.338207",
-          longitude: "-121.886330"
+          latitude: "37.759703",
+          longitude: "-122.428093"
         }
       }
     });
@@ -37,8 +37,9 @@ class googleMapComponent extends React.Component {
           clickMe
         </button>
         <br />
-
-        <DirectionsComponents latitude={this.state.data} />
+        <div>
+          <DirectionsComponents latitude={this.state.data} />
+        </div>
       </div>
     );
   }
