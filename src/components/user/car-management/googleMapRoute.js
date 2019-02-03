@@ -15,8 +15,6 @@ class DirectionsComponents extends Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
     const DirectionsComponent = compose(
       withProps({
         googleMapURL:
@@ -25,11 +23,12 @@ class DirectionsComponents extends Component {
         containerElement: <div style={{ width: `100%` }} />,
         mapElement: <div style={{ height: `600px`, width: `600px` }} />
       }),
-      withState("data", "setData", false),
       withScriptjs,
       withGoogleMap,
       lifecycle({
         componentDidMount() {
+          console.log(this.props.latitude.latitude.destination.latitude);
+          console.log(this.props.latitude.latitude.destination.longitude);
           const data = {
             source: {
               place: "San Macisco",
@@ -38,24 +37,10 @@ class DirectionsComponents extends Component {
             },
             destination: {
               place: "San Jose",
-              latitude: "37.338207",
-              longitude: "-121.886330"
+              latitude: this.props.latitude.latitude.destination.latitude,
+              longitude: this.props.latitude.latitude.destination.longitude
             }
           };
-          //   this.setState({
-          //     data: {
-          //       source: {
-          //         place: "San Macisco",
-          //         latitude: "37.762391",
-          //         longitude: "-122.439192"
-          //       },
-          //       destination: {
-          //         place: "San Jose",
-          //         latitude: "37.338207",
-          //         longitude: "-121.886330"
-          //       }
-          //     }
-          //   });
 
           const DirectionsService = new google.maps.DirectionsService();
           DirectionsService.route(
@@ -83,18 +68,23 @@ class DirectionsComponents extends Component {
           );
         }
       })
-    )(props => (
-      <GoogleMap defaultZoom={3}>
-        {props.directions && (
-          <DirectionsRenderer
-            directions={props.directions}
-            suppressMarkers={props.markers}
-          />
-        )}
-      </GoogleMap>
-    ));
+    )(
+      props => (
+        console.log(props),
+        (
+          <GoogleMap defaultZoom={3}>
+            {
+              <DirectionsRenderer
+                directions={props.directions}
+                suppressMarkers={props.markers}
+              />
+            }
+          </GoogleMap>
+        )
+      )
+    );
 
-    return <DirectionsComponent />;
+    return <DirectionsComponent latitude={this.props} />;
   }
 }
 
