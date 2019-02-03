@@ -20,7 +20,7 @@ class DirectionsComponents extends Component {
           "https://maps.googleapis.com/maps/api/js?key=AIzaSyAQoP1pA_88qyn368YD5N2i1tuA6eWhqX0&callback=initMap' ",
         loadingElement: <div style={{ height: `400px` }} />,
         containerElement: <div style={{ width: `90%` }} />,
-        mapElement: <div style={{ height: `200px`, width: `600px` }} />
+        mapElement: <div style={{ height: `500px`, width: `600px` }} />
       }),
       withScriptjs,
       withGoogleMap,
@@ -52,7 +52,7 @@ class DirectionsComponents extends Component {
                 data.destination.latitude,
                 data.destination.longitude
               ),
-              travelMode: google.maps.TravelMode.TRANSIT
+              travelMode: google.maps.TravelMode.DRIVING
             },
             (result, status) => {
               if (status === google.maps.DirectionsStatus.OK) {
@@ -71,7 +71,7 @@ class DirectionsComponents extends Component {
       props => (
         console.log(props),
         (
-          <GoogleMap defaultZoom={3}>
+          <GoogleMap defaultZoom={11}>
             {
               <DirectionsRenderer
                 directions={props.directions}

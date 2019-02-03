@@ -16,6 +16,20 @@ class googleMapComponent extends React.Component {
         }
       }
     });
+    // this.interval = setInterval(() => {
+    //   this.setState({
+    //     data: {
+    //       destination: {
+    //         latitude: "37.362312",
+    //         longitude: "-121.982705"
+    //       }
+    //     }
+    //   });
+    // }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   changeState(e) {
@@ -23,8 +37,8 @@ class googleMapComponent extends React.Component {
     this.setState({
       data: {
         destination: {
-          latitude: "37.759703",
-          longitude: "-122.428093"
+          latitude: "37.362312",
+          longitude: "-121.982705"
         }
       }
     });
