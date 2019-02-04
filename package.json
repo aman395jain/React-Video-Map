@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "@types/googlemaps": "^3.30.16",
+    "@types/markerclustererplus": "^2.1.33",
+    "@types/react": "^16.8.1",
     "bootstrap": "^4.2.1",
     "google-maps-react": "^2.0.2",
     "lodash": "^4.17.11",
