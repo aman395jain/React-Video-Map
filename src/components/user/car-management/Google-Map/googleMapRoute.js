@@ -17,7 +17,7 @@ class DirectionsComponents extends Component {
     const DirectionsComponent = compose(
       withProps({
         googleMapURL:
-          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAQoP1pA_88qyn368YD5N2i1tuA6eWhqX0&callback=initMap' ",
+          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAQoP1pA_88qyn368YD5N2i1tuA6eWhqX0&libraries=geometry,drawing,places",
         loadingElement: <div style={{ height: `400px` }} />,
         containerElement: <div style={{ width: `90%` }} />,
         mapElement: <div style={{ height: `500px`, width: `600px` }} />
