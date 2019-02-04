@@ -20,7 +20,8 @@
     "react-tooltip": "^3.9.2",
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "video.js": "^7.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
