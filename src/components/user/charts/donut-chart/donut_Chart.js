@@ -5,6 +5,40 @@ import "../_chart.scss";
 export default class DonutWithText extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      donutChartData: {}
+    };
+  }
+
+  getDonutChartData() {
+    this.setState({
+      donutChartData: {
+        labels: ["trip1", "trip2", "trip3"],
+        datasets: [
+          {
+            data: [22, 6, 10],
+            backgroundColor: [
+              "rgb(0, 228, 228)",
+              "rgb(255, 00, 00)",
+              "rgb(62, 57, 57)"
+            ],
+            hoverBackgroundColor: [
+              "rgb(0, 228, 228)",
+              "rgba(255, 00, 00)",
+              "rgba(62, 57, 57)"
+            ]
+          }
+        ],
+        text: "38 Total Trips"
+      }
+    });
+  }
+
+  componentDidMount() {
+    this.getDonutChartData();
+  }
+  render() {
+    const data = this.state.donutChartData;
     let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
     Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
       draw: function() {
@@ -26,32 +60,10 @@ export default class DonutWithText extends React.Component {
         ctx.fillText(text, textX, textY);
       }
     });
-
-    this.data = {
-      labels: ["trip1", "trip2", "trip3"],
-      datasets: [
-        {
-          data: [22, 6, 10],
-          backgroundColor: [
-            "rgb(0, 228, 228)",
-            "rgb(255, 00, 00)",
-            "rgb(62, 57, 57)"
-          ],
-          hoverBackgroundColor: [
-            "rgb(0, 228, 228)",
-            "rgba(255, 00, 00)",
-            "rgba(62, 57, 57)"
-          ]
-        }
-      ],
-      text: "38 Total Trips"
-    };
-  }
-  render() {
     return (
       <div className="donut-chart">
         <Doughnut
-          data={this.data}
+          data={this.state.donutChartData}
           options={{
             cutoutPercentage: 70,
             responsive: true,
