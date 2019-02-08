@@ -3,7 +3,10 @@ import "./carDetail.scss";
 import LatiLognDetails from "../lati-long-details/latiLongDetails";
 import MapDetails from "../map-details/mapDetails";
 import CarVideo from "../car-video/CarVideo";
-import GoogleMapComponent from './../Google-Map/googleMapRoute';
+import GoogleMapComponent from "./../Google-Map/googleMapRoute";
+import DonutChart from "./../charts/donut-chart/donut_Chart";
+import BarChart from "./../charts/barChart-chart2/barChart";
+import LineChart from "./../charts/line-chart/lineChart";
 
 class CarDetail extends Component {
   state = {
@@ -12,22 +15,23 @@ class CarDetail extends Component {
   };
   constructor(props) {
     super(props);
-    
-    this.state = {latlng : {}}
+
+    this.state = { latlng: {} };
     const id = props.match.params.incidentId;
     this.updateVideo(id);
     this.setLatLng = this.setLatLng.bind(this);
   }
   componentDidMount() {
-    let controlBar = document.getElementsByClassName('vjs-control-bar');
-    
-    //document.getElementById('video-control-div').appendChild(controlBar[0]);  
+    let controlBar = document.getElementsByClassName("vjs-control-bar");
 
+    //document.getElementById('video-control-div').appendChild(controlBar[0]);
   }
 
-  setLatLng(e){
-    console.log("setlatlng" ,e);
-    this.setState({latlng:{"lat" : e.lat().toFixed(6),"lng" : e.lng().toFixed(6)}});
+  setLatLng(e) {
+    console.log("setlatlng", e);
+    this.setState({
+      latlng: { lat: e.lat().toFixed(6), lng: e.lng().toFixed(6) }
+    });
 
     console.log(this.state.latlng);
   }
@@ -86,16 +90,27 @@ class CarDetail extends Component {
               </div>
             </div>
           </div>
-          <div className="row" style={{ marginTop: "34px",minHeight:"100px" }}>
-            <div className="col-12 d-flex p-0" id="video-control-div">
-             
-            </div>
+          <div
+            className="row"
+            style={{ marginTop: "34px", minHeight: "100px" }}
+          >
+            <div className="col-12 d-flex p-0" id="video-control-div" />
           </div>
           <div className="row" style={{ marginTop: "34px" }}>
             <div className="col-12 d-flex p-0">
               <LatiLognDetails latlng={this.state.latlng} />
               <GoogleMapComponent setLatLng={this.setLatLng} />
             </div>
+          </div>
+          <div className="row charts" style={{ marginTop: "18px" }}>
+            <div className="col-3 donut">
+              <DonutChart />
+            </div>
+            <div className="col-3 barChart">
+              <BarChart />
+            </div>
+            <div className="col-4 lineChart">{/* <LineChart /> */}</div>
+            <div className="col-2">gsssj</div>
           </div>
         </div>
       </div>
