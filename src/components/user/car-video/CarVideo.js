@@ -8,6 +8,10 @@ class CarVideo extends Component {
     this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
       // console.log("this.props", this.props);
     });
+    let controlBar = document.getElementsByClassName('vjs-control-bar');
+    console.log('controlBar',this.player.getChild("controlBar"));
+    controlBar[0].className += " control-bar-pos"
+    //controlBar[0].addClass('control-bar-pos');
   }
 
   componentWillUnmount() {

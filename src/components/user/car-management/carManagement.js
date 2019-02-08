@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactTable from "react-table";
 import { Link } from "react-router-dom";
+import axios from 'axios'
 
 import tableData from "../../../data/carData.json";
 import Header from "../../../shared/header/header.js";
@@ -8,7 +9,14 @@ import Header from "../../../shared/header/header.js";
 class UserManagement extends Component {
   state = { selected: {}, selectAll: 0, data: tableData, openModal: false };
 
-  componentDidMount() {}
+  componentDidMount() {
+    // axios.get("https://rqnsxqzbok.execute-api.us-east-1.amazonaws.com/prototype").then(response => {
+    //   console.log("response data" ,response.data);
+    //   this.setState({ data: response.data });
+    // }).catch(err => {
+    //   console.log("ERROR :: " + err);
+    // })
+  }
 
   toggleRow(name) {
     const newSelected = Object.assign({}, this.state.selected);

@@ -1,5 +1,6 @@
 import "@babel/polyfill";
 import "../src/assets/js/polyfills";
+import "../src/assets/js/gpoly";
 import "./index.scss";
 import React from "react";
 import ReactDOM from "react-dom";

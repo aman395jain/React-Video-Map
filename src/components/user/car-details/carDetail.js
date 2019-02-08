@@ -3,6 +3,7 @@ import "./carDetail.scss";
 import LatiLognDetails from "../lati-long-details/latiLongDetails";
 import MapDetails from "../map-details/mapDetails";
 import CarVideo from "../car-video/CarVideo";
+import GoogleMapComponent from './../Google-Map/googleMapRoute';
 
 class CarDetail extends Component {
   state = {
@@ -11,22 +12,25 @@ class CarDetail extends Component {
   };
   constructor(props) {
     super(props);
-    // this.videoJsOptions = {
-    //   autoplay: false,
-    //   controls: true,
-    //   sources: [
-    //     {
-    //       src: this.state.url,
-    //       type: "video/mp4"
-    //     }
-    //   ]
-    // };
-
-    // get id from param
+    
+    this.state = {latlng : {}}
     const id = props.match.params.incidentId;
     this.updateVideo(id);
+    this.setLatLng = this.setLatLng.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    let controlBar = document.getElementsByClassName('vjs-control-bar');
+    
+    //document.getElementById('video-control-div').appendChild(controlBar[0]);  
+
+  }
+
+  setLatLng(e){
+    console.log("setlatlng" ,e);
+    this.setState({latlng:{"lat" : e.lat().toFixed(6),"lng" : e.lng().toFixed(6)}});
+
+    console.log(this.state.latlng);
+  }
 
   updateVideo(id) {
     console.log("carDetails", id);
@@ -82,11 +86,15 @@ class CarDetail extends Component {
               </div>
             </div>
           </div>
-
+          <div className="row" style={{ marginTop: "34px",minHeight:"100px" }}>
+            <div className="col-12 d-flex p-0" id="video-control-div">
+             
+            </div>
+          </div>
           <div className="row" style={{ marginTop: "34px" }}>
             <div className="col-12 d-flex p-0">
-              <LatiLognDetails />
-              <MapDetails />
+              <LatiLognDetails latlng={this.state.latlng} />
+              <GoogleMapComponent setLatLng={this.setLatLng} />
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 @import "~video.js/src/css/video-js.scss";
 
 .car-details {
-  background: url("../../../assets/images/car_Detail_view.png") top center
+  background: url("../../../assets/images/04 Wireframe_Insurance Agent_Car Information Details_Dashboard_One Car.png") top center
     no-repeat;
   background-position-y: -117px;
   height: 1250px;
@@ -144,8 +144,18 @@
     height: 3em;
     line-height: 2.8em;
   }
+  .control-bar-pos{
+    position: absolute;
+    top: 118%;
+    z-index: 100;
+    margin-left: -208px;
+    min-width: -webkit-fill-available;
+    min-height: 42px;
+  }
 }
 .vjs_video_3-dimensions {
   width: 100% !important;
   height: 100% !important;
 }
+
+
