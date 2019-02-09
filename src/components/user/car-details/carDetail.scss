@@ -155,20 +155,25 @@
 
   .charts {
     border-radius: 10px;
-    .donut {
-      background-color: antiquewhite;
-      height: 230px;
-      margin: 0px;
+    .donutChart {
+      background-color: white;
+      height: 220px;
+      margin-right: 53px;
     }
     .barChart {
-      background-color: grey;
-      height: 230px;
-      margin: 0px;
+      background-color: white;
+      height: 220px;
+      margin-right: 3%;
+      min-width: 19%;
+      padding-left: 0px;
     }
     .lineChart {
-      background-color: aliceblue;
-      height: 230px;
+      background-color: white;
+      height: 220px;
       margin: 0px;
+      padding-left: 0px;
+      margin-top: 5px;
+      max-width: 39.66667% !important;
     }
   }
 }

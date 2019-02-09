@@ -33,7 +33,7 @@ class Charts extends Component {
                     stepSize: 10,
                     min: 0,
                     max: 30,
-                    padding: 15,
+                    padding: 5,
                     callback: function(value) {
                       return ((value / 100) * 100).toFixed(0) + "%";
                     }

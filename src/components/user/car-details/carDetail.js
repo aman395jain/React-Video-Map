@@ -103,16 +103,16 @@ class CarDetail extends Component {
             </div>
           </div>
           <div className="row charts" style={{ marginTop: "18px" }}>
-            <div className="col-2 donut">
+            <div className="col-2 donutChart">
               <DonutChart />
             </div>
-            <div className="col-3 barChart">
+            <div className="col-2 barChart">
               <BarChart />
             </div>
             <div className="col-5 lineChart">
               <LineChart />
             </div>
-            <div className="col-2">gsssj</div>
+            <div className="col-3" />
           </div>
         </div>
       </div>
