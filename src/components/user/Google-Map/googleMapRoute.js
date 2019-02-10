@@ -1,19 +1,24 @@
 import React from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 import logo from './../../../assets/images/icons8-sedan-26.png'
 
 export default class GoogleMapComponent extends React.Component {
   constructor(props) {
+    
     super(props);
+    
+    //this.setState({routeArray : cardata});
     this.state = {
       mapIsReady: false,
-      routeArray: [
-        { location: "Noida Sec 62,UP", stopover: true },
-        { location: "Noida Sec 37,UP", stopover: false },
-        { location: "Noida Sec 126,UP", stopover: false },
-        { location: "Noida Sec 135,UP", stopover: false },
-        { location: "Pari chowk,UP", stopover: true },
-      ]
+       routeArray: []
+      //[
+      //   { location: "Noida Sec 62,UP", stopover: true },
+      //   { location: "Noida Sec 37,UP", stopover: false },
+      //   { location: "Noida Sec 126,UP", stopover: false },
+      //   { location: "Noida Sec 135,UP", stopover: false },
+      //   { location: "Pari chowk,UP", stopover: true },
+      // ]
     };
 
     this.setRoutes = this.setRoutes.bind(this);
@@ -25,6 +30,7 @@ export default class GoogleMapComponent extends React.Component {
     this.startmap = this.startmap.bind(this);
     this.stopMovement = this.stopMovement.bind(this);
     this.startMovement = this.startMovement.bind(this);
+    this.computeTotalDistance = this.computeTotalDistance.bind(this);
     
     this.map = null;
     this.directionsService = null;
@@ -58,7 +64,8 @@ export default class GoogleMapComponent extends React.Component {
 
 
 
-  componentDidMount() {
+  componentWillMount() {
+    
 // axios.get("").then(response => {
 //   this.state.routeArray = response.data;
 // })
@@ -90,8 +97,208 @@ export default class GoogleMapComponent extends React.Component {
 
  startmap(){
     return new Promise((resolve,reject) => {
-      console.log("this.map", this.map);
+      //console.log("this.map", this.map);
       // document.body.appendChild(script);
+      console.log("props for google component" , this.props)
+      let cardata = 
+      [
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:22:32Z",
+            "latitude": "37.388467",
+            "longitude": "-122.008963"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:23:32Z",
+            "latitude": "37.388249",
+            "longitude": "-122.008637"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:24:32Z",
+            "latitude": "37.388267",
+            "longitude": "-122.008251"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:25:32Z",
+            "latitude": "37.388335",
+            "longitude": "-122.007779"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:26:32Z",
+            "latitude": "37.388215",
+            "longitude": "-122.007435"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:27:32Z",
+            "latitude": "37.388266",
+            "longitude": "-122.006985"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:28:32Z",
+            "latitude": "37.388318",
+            "longitude": "-122.006513"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:29:32Z",
+            "latitude": "37.388266",
+            "longitude": "-122.005933"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:30:32Z",
+            "latitude": "37.388283",
+            "longitude": "-122.005418"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:31:32Z",
+            "latitude": "37.388437",
+            "longitude": "-122.004817"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:32:32Z",
+            "latitude": "37.388590",
+            "longitude": "-122.004774"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:33:32Z",
+            "latitude": "37.388812",
+            "longitude": "-122.004774"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:34:32Z",
+            "latitude": "37.389102",
+            "longitude": "-122.004796"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:35:32Z",
+            "latitude": "37.389374",
+            "longitude": "-122.004409"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:36:32Z",
+            "latitude": "37.389374",
+            "longitude": "-122.004409"
+          },
+          {
+            "vin": "121212",
+            "dateTime": "2019-02-05T17:37:32Z",
+            "latitude": "37.389405",
+            "longitude": "-122.004295"
+          }
+        ]
+    
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:24:32Z",
+        //   "latitude": "37.383486",
+        //   "longitude": "-122.013513"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:22:32Z",
+        //   "latitude": "37.383576",
+        //   "longitude": "-122.013755"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:26:32Z",
+        //   "latitude": "37.383363",
+        //   "longitude": "-122.013304"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:27:32Z",
+        //   "latitude": "37.383273",
+        //   "longitude": "-122.013186"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:28:32Z",
+        //   "latitude": "37.383180",
+        //   "longitude": "-122.013052"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:29:32Z",
+        //   "latitude": "37.383116",
+        //   "longitude": "-122.012966"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:30:32Z",
+        //   "latitude": "37.383064",
+        //   "longitude": "-122.012875"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:31:32Z",
+        //   "latitude": "37.383030",
+        //   "longitude": "-122.012719"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:32:32Z",
+        //   "latitude": "37.383150",
+        //   "longitude": "-122.012574"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:33:32Z",
+        //   "latitude": "37.383256",
+        //   "longitude": "-122.012515"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:34:32Z",
+        //   "latitude": "37.383393",
+        //   "longitude": "-122.012397"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:35:32Z",
+        //   "latitude": "37.383512",
+        //   "longitude": "-122.012322"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:36:32Z",
+        //   "latitude": "37.383648",
+        //   "longitude": "-122.012151"
+        // },
+        // {
+        //   "vin": "121212",
+        //   "dateTime": "2019-02-05T17:37:32Z",
+        //   "latitude": "37.383789",
+        //   "longitude": "-122.011952"
+        // }
+     // ];
+  
+     cardata = cardata.map(item => { return {
+      location : new window.google.maps.LatLng(item.latitude,item.longitude),
+      stopover : false
+    }})
+    
+    // let cardata = this.props.Cardetails && this.props.Cardetails.gpsData  ? this.props.Cardetails.gpsData.map(item => { return {
+    //   location : new window.google.maps.LatLng(item.latitude,item.longitude),
+    //   stopover : false
+    // }}) : []
+
+
+    this.setState({routeArray : cardata});
+    console.log("cardata" , cardata);
       const map = new window.google.maps.Map(document.getElementById('map'), {
         zoom: 10
       });
@@ -151,8 +358,8 @@ export default class GoogleMapComponent extends React.Component {
         //var directionsrenderer = new window.google.maps.DirectionsRenderer({ map: map });
         var travelMode = window.google.maps.DirectionsTravelMode.DRIVING;
         var request = {
-          origin: startLoc[i],
-          destination: endLoc[i],
+          origin:startLoc[i], //new window.google.maps.LatLng(,-122.419418),//
+          destination: endLoc[i],//new window.google.maps.LatLng(37.804363,-122.271111),//
          waypoints: this.state.routeArray.slice(1, this.state.routeArray.length - 1),
           //optimizeWaypoints: true,
           travelMode: travelMode
@@ -178,6 +385,20 @@ export default class GoogleMapComponent extends React.Component {
       console.log("ERROR :" + err);
     })
   }
+
+  computeTotalDistance(result) {
+    let totalDist = 0;
+    //var totalTime = 0;
+    let myroute = result.routes[0];
+    for (let i = 0; i < myroute.legs.length; i++) {
+      totalDist += myroute.legs[i].distance.value;
+      //totalTime += myroute.legs[i].duration.value;
+    }
+    totalDist = totalDist / 1000.
+    console.log("total disctnce" , totalDist);
+    //document.getElementById("total").innerHTML = "total distance is: " + totalDist + " km<br>total time is: " + (totalTime / 60).toFixed(2) + " minutes";
+  }
+
 
   //called after getting route from directions service, does all the heavylifting
   makeRouteCallback(map, routeNum, disp, rendererOptions) {
@@ -218,7 +439,10 @@ export default class GoogleMapComponent extends React.Component {
         disp = new window.google.maps.DirectionsRenderer(rendererOptions);
         disp.setMap(map);
         disp.setDirections(response);
+        self.computeTotalDistance(response);
+        let distances = _.flatMap(response.routes, route => _.flatMap(route.legs, leg => leg.distance.value));
 
+        console.log('Total distance',_.sum(distances));
         // create Markers
         for (let i = 0; i < legs.length; i++) {
           // for first marker only
@@ -249,6 +473,7 @@ export default class GoogleMapComponent extends React.Component {
     }
   }
 
+  
   // returns the marker
   createMarker(map,latlng, label, html) {
     var contentString = '<b>' + label + '</b><br>' + html;
@@ -301,6 +526,9 @@ export default class GoogleMapComponent extends React.Component {
     var lastPosn = this.marker[index].getPosition();
     this.marker[index].setPosition(p);
     let heading = window.google.maps.geometry.spherical.computeHeading(lastPosn, p);
+    
+let distance = window.google.maps.geometry.spherical.computeDistanceBetween (lastPosn, p);
+console.log('computeDistanceBetween',distance);
     this.icon.rotation = heading;
     this.marker[index].setIcon(this.icon);
     //console.log("currentPosition",currentPosition);
@@ -309,7 +537,7 @@ export default class GoogleMapComponent extends React.Component {
     this.props.setLatLng(p);
     //console.log("this.poly2",this.poly2);
     let self = this;
-    this.timerHandle[index] = setTimeout(() => {self.animate(index , (d + this.step))}, tick || 20);
+    this.timerHandle[index] = setTimeout(() => {self.animate(index , (d + 1))}, tick || 100);
   }
 
   // start marker movement by updating marker position every 100 milliseconds i.e. tick value
@@ -319,6 +547,7 @@ export default class GoogleMapComponent extends React.Component {
     //this.marker.setIcon("../../assets/images/icons8-sedan-26.png");
       clearTimeout(this.timerHandle[index]);
     this.eol[index] = this.polyLine[index].Distance();
+    console.log('this.eol[index]',this.eol[index]);
     //map.setCenter(this.polyLine[index].getPath().getAt(0));
 
     this.poly2[index] = new window.google.maps.Polyline({
@@ -347,11 +576,9 @@ export default class GoogleMapComponent extends React.Component {
   }
 
   render() {
+    
     return (
       <div style={{ "width": "100%", "height": "100%" }}>
-      <button onClick={this.setRoutes}>click me....</button>
-      <button onClick={this.stopMovement}>stop....</button>
-      <button onClick={this.startMovement}>start....</button>
       <div id="map" style={{ "width": "100%", "height": "100%" }} />
       </div> 
     );

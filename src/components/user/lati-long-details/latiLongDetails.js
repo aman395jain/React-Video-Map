@@ -32,6 +32,12 @@ render(){
           <span className="column">Video Length </span>
           <span>00:30:00</span>
         </div>
+        <div className="d-flex align-items-center">
+          <label>Accident DateTime</label>
+          <label>{this.props.accidentData ? this.props.accidentData.dateTime : ""}</label>
+          <span className="column">Accident Position</span>
+          <span>{this.props.accidentData ? this.props.accidentData.latitude+" "+ this.props.accidentData.longitude  : ""}</span>
+        </div>
       </div>
     );
 }

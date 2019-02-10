@@ -13,7 +13,7 @@ class userForm extends Component {
               <h3>User Form</h3>
             </div>
 
-            <form>
+            <form target="_blank">
               <div style={{ marginBottom: "3%" }}>
                 Please select one or more
               </div>

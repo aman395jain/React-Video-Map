@@ -3,10 +3,13 @@ import "./carDetail.scss";
 import LatiLognDetails from "../lati-long-details/latiLongDetails";
 import MapDetails from "../map-details/mapDetails";
 import CarVideo from "../car-video/CarVideo";
-import GoogleMapComponent from "./../Google-Map/googleMapRoute";
 import DonutChart from "./../charts/donut-chart/donut_Chart";
 import BarChart from "./../charts/barChart-chart2/barChart";
 import LineChart from "./../charts/line-chart/lineChart";
+import GoogleMapComponent from './../Google-Map/googleMapRoute';
+import axios from "axios";
+import _ from 'lodash'
+
 
 class CarDetail extends Component {
   state = {
@@ -16,59 +19,75 @@ class CarDetail extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { latlng: {} };
-    const id = props.match.params.incidentId;
-    this.updateVideo(id);
+    this.state = { latlng: {}, cardata : {},accidentData:{},
+    //videoUrl:"https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8",
+    videoJsOptions : {
+      autoplay: false,
+      controls: true,
+      sources: [
+        {
+          src:"https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8",
+          type: "application/x-mpegURL"
+        }
+      ]
+    } }
+    const id = props.match.params.vin;
+    //this.updateVideo("carvin121212_cam1");
     this.setLatLng = this.setLatLng.bind(this);
+    this.setRoutes = this.setRoutes.bind(this);
+    this.updateVideo = this.updateVideo.bind(this);
+    
   }
   componentDidMount() {
-    let controlBar = document.getElementsByClassName("vjs-control-bar");
-
-    //document.getElementById('video-control-div').appendChild(controlBar[0]);
+    //console.log(componentDidMount)
+    axios.post("https://skloa3avwj.execute-api.us-east-1.amazonaws.com/prototype", {
+    vin : this.props.match.params.vin 
+    }).then(response => {
+      console.log("data" , response.data);
+      if(response && response.data){
+        this.setState({ cardata: response.data });
+        this.setState({accidentData : response.data.accidentFlagData[0]})
+        //this.setState({ camdata : response.data.cardata })
+        this.updateVideo("carvin121212_cam1");
+      }
+      
+    }).catch(err => {
+      console.log("err" + err);
+    })
+   
   }
 
   setLatLng(e) {
-    console.log("setlatlng", e);
-    this.setState({
-      latlng: { lat: e.lat().toFixed(6), lng: e.lng().toFixed(6) }
-    });
-
-    console.log(this.state.latlng);
+    //console.log("setlatlng" ,e);
+    this.setState({ latlng: { "lat": e.lat().toFixed(6), "lng": e.lng().toFixed(6) }
+  });
+    //console.log(this.state.latlng);
   }
 
-  updateVideo(id) {
-    console.log("carDetails", id);
-    // fetch video on the basis of id eg. INC00000000098
-
-    if (id === "INC00000000098") {
-      console.log("iffff");
-      this.videoJsOptions = {
+  updateVideo(camName) {
+    if(this.state.cardata){
+      console.log('this.state.cardata.streamData',this.state.cardata.streamData)
+     // let videodetails = [];
+      let  videodetails = _.filter(this.state.cardata.streamData,(item) => item.name == camName).map(item =>{ return  {url : item.url }});
+      this.setState({videoJsOptions : {
         autoplay: false,
         controls: true,
         sources: [
           {
-            src:
-              "https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8",
-            type: "application/x-mpegURL"
+            src:videodetails.length > 0 ? videodetails[0].url : "",
+            //type: "application/x-mpegURL"
           }
         ]
-      };
-    } else {
-      console.log("else");
-      this.videoJsOptions = {
-        autoplay: false,
-        controls: true,
-        sources: [
-          {
-            src: this.state.url,
-            type: "video/mp4"
-          }
-        ]
-      };
-    }
+      }});
+      console.log("this.videoJsOptions",this.state.videoJsOptions);
   }
-
+ 
+  }
+  setRoutes(){
+    this.refs.googleMap.setRoutes();
+  }
   render() {
+
     return (
       <div className="car-details">
         <div className="container">
@@ -77,29 +96,30 @@ class CarDetail extends Component {
               <div className="car-image">
                 <span className="sensor pos-1" />
                 <span className="sensor pos-2" />
-                <span className="sensor pos-3" />
-                <span className="sensor pos-4" />
+                {/* <span className="sensor pos-3" onClick={this.updateVideo(cardata[0].cam1)} />
+                <span className="sensor pos-4" onClick={this.updateVideo(cardata[0].cam2)} /> */}
                 <span className="sensor pos-5" />
                 <span className="sensor pos-6" />
               </div>
               <div className="car-video">
                 <div className="car-id">
-                  {this.props.match.params.incidentId}
+                  {this.props.match.params.vin}
                 </div>
-                <CarVideo {...this.videoJsOptions} />
+                <CarVideo videoOptions = {this.state.videoJsOptions} />
               </div>
             </div>
           </div>
-          <div
-            className="row"
-            style={{ marginTop: "34px", minHeight: "100px" }}
-          >
-            <div className="col-12 d-flex p-0" id="video-control-div" />
-          </div>
-          <div className="row" style={{ marginTop: "34px" }}>
+          <div className="row" style={{ marginTop: "34px", minHeight: "100px" }}>
             <div className="col-12 d-flex p-0">
-              <LatiLognDetails latlng={this.state.latlng} />
-              <GoogleMapComponent setLatLng={this.setLatLng} />
+            <button onClick={this.setRoutes}>click me....</button>
+            {/* <button onClick={this.refs.googleMap.stopMovement}>stop....</button>
+            <button onClick={this.refs.googleMap.startMovement}>start....</button> */}
+            </div>
+          </div>
+          <div className="row" style={{ marginTop: "34px",    width: "1149px" }}>
+            <div className="col-12 d-flex p-0">
+              <LatiLognDetails latlng={this.state.latlng} accidentData = {this.state.accidentData}/>
+              <GoogleMapComponent ref="googleMap" setLatLng={this.setLatLng} Cardetails={this.state.cardata} />
             </div>
           </div>
           <div className="row charts" style={{ marginTop: "18px" }}>

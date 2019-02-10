@@ -5,17 +5,18 @@ import axios from 'axios'
 
 import tableData from "../../../data/carData.json";
 import Header from "../../../shared/header/header.js";
+import Modalform from "./../forms/modalForm" 
 
 class UserManagement extends Component {
-  state = { selected: {}, selectAll: 0, data: tableData, openModal: false };
+  state = { selected: {}, selectAll: 0, data: [], openModal: false };
 
   componentDidMount() {
-    // axios.get("https://rqnsxqzbok.execute-api.us-east-1.amazonaws.com/prototype").then(response => {
-    //   console.log("response data" ,response.data);
-    //   this.setState({ data: response.data });
-    // }).catch(err => {
-    //   console.log("ERROR :: " + err);
-    // })
+    axios.get("https://rqnsxqzbok.execute-api.us-east-1.amazonaws.com/prototype").then(response => {
+      console.log("response data" ,response.data);
+      this.setState({ data: response.data });
+    }).catch(err => {
+      console.log("ERROR :: " + err);
+    })
   }
 
   toggleRow(name) {
@@ -43,10 +44,9 @@ class UserManagement extends Component {
     });
   }
 
-  openUserForm(e) {
-    //this.setState({openModal : true})
-    e.preventDefault();
-    this.refs.addUserModal.handleModalOpen();
+  openModal(e) {
+  
+   this.refs.modalform.onOpenModal(e);
   }
 
   userListColumn() {
@@ -57,26 +57,26 @@ class UserManagement extends Component {
         Cell: ({ original }) => {
           return (
             <div className="d-flex align-items-center">
-              <Link
-                to={{
-                  pathname: "/carDetails/" + original.incident_no,
-                  param1: "Par1"
-                }}
+              <button onClick={() => this.openModal(original.vin)}
+                // to={{
+                //   pathname: "/modalform/" + original.vin,
+                //   param1: "Par1"
+                // }}
                 className="car-name"
               >
                 {original.incident_no}
-              </Link>
+              </button>
             </div>
           );
         }
       },
       {
         Header: "Date",
-        accessor: "Date"
+        accessor: "dateTime"
       },
       {
         Header: "VIN",
-        accessor: "VIN"
+        accessor: "vin"
       },
       {
         Header: "Car Model",
@@ -142,6 +142,7 @@ class UserManagement extends Component {
             </div>
           </div>
         </div>
+        <Modalform ref="modalform"></Modalform>
       </div>
     );
   }
