@@ -21,8 +21,8 @@
       border: 2px solid #ff3b3b;
       cursor: pointer;
       &.pos-1 {
-        left: 45%;
-        top: 21px;
+        left: 27%;
+        top: 104px;
         background-color: #ff9600;
         border-color: #ffb346;
         transition: all 0.3s;
@@ -34,6 +34,12 @@
       &.pos-2 {
         left: 61%;
         top: 104px;
+        background-color: #ff9600;
+        border-color: #ffb346;
+        &:hover {
+          background-color: #de0303;
+          border-color: #ff3b3b;
+        }
       }
       &.pos-3 {
         left: 27%;

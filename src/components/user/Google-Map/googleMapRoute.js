@@ -577,7 +577,7 @@ export default class GoogleMapComponent extends React.Component {
     //console.log("this.poly2",this.poly2);
     let self = this;
     this.timerHandle[index] = setTimeout(() => {
-      self.animate(index, d + 1);
+      self.animate(index, d + 20);
     }, tick || 100);
   }
 
