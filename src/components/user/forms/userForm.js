@@ -40,7 +40,7 @@ class userForm extends Component {
           <div className="col-4" />
           <div className="col-4 user-form">
             <div className="justify-content-between align-items-center user-head">
-              <h3>User Form</h3>
+              <h3>Access Request</h3>
             </div>
 
             <form onSubmit={e => this.handleSubmit(e)}>
@@ -93,18 +93,75 @@ class userForm extends Component {
                   <button
                     type="submit"
                     className="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
                     onClick={() => this.updateState(true)}
                   >
                     Approve
                   </button>
+                  <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Your request is Approved and please refresh the
+                            Car-details page.
+                          </h5>
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="col-4">
                   <button
                     className="btn btn-danger"
                     onClick={() => this.updateState(false)}
+                    data-toggle="modal"
+                    data-target="#exampleModal1"
                   >
                     Reject
                   </button>
+                  <div
+                    class="modal fade"
+                    id="exampleModal1"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Access request is rejected successfully.
+                          </h5>
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="col-4" />
               </div>
