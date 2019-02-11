@@ -54,18 +54,20 @@ class CarDetail extends Component {
         }
       )
       .then(response => {
-        console.log("data", response.data);
+        console.log("data", typeof response.data.message);
         if (
           response &&
           response.data &&
           typeof response.data.message === "undefined"
         ) {
+          console.log("hare in data");
           this.setState({ responseFlag: true });
           this.setState({ cardata: response.data });
           this.setState({ accidentData: response.data.accidentFlagData[0] });
           //this.setState({ camdata : response.data.cardata })
           this.updateVideo("carvin121212_cam1");
         } else {
+          console.log("hare in not data");
           this.refs.modalform.onOpenModal(this.props.match.params.vin);
         }
       })
@@ -171,14 +173,7 @@ class CarDetail extends Component {
         </div>
       </div>
     ) : (
-      <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-12 text-center align-middle">vdhchvcdcdvg</div>
-          </div>
-        </div>
-        <Modal ref="modalform" />
-      </div>
+      <Modal ref="modalform" />
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-responsive-modal";
 import PropTypes from "prop-types";
+import "../car-details/carDetail.scss";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -37,32 +38,39 @@ class ModalForm extends React.Component {
     this.setState({ open: false });
   };
 
+  onModal = () => {
+    //this.setState({ open: false });
+  };
   render() {
     const { open } = this.state;
     return (
       <div style={styles}>
-        <Modal open={open} onClose={this.onCloseModal} center>
+        <Modal open={open} onClose={this.onModal} closeOnEsc={false}>
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title" id="exampleModalLabel">
                 Permission Access
               </h4>
             </div>
-            <div className="modal-body">Requested for access permission.</div>
+            <div className="modal-body">
+              You are not authorized to access the content of the page. Please
+              click on Access request for approval.
+            </div>
             <div className="modal-footer">
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={() => this.openPermissionForm()}
               >
-                Access
+                Request Access
               </button>
               <button
                 type="button"
                 className="btn btn-danger"
                 data-dismiss="modal"
+                onClick={this.onCloseModal}
               >
-                Denied
+                Cancel
               </button>
             </div>
           </div>

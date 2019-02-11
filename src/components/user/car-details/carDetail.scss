@@ -177,7 +177,34 @@
     }
   }
 }
+.permission-access {
+  .center-Container {
+    position: relative;
+    height: 100%;
+  }
+
+  .absolute-Center {
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+}
 .vjs_video_3-dimensions {
   width: 100% !important;
   height: 100% !important;
+}
+
+.styles_closeButton__20ID4 {
+  display: none !important;
+}
+.styles_modal__gNwvD {
+  position: absolute;
+  left: 20%;
+  top: 5%;
 }

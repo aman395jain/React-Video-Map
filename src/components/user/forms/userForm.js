@@ -3,15 +3,35 @@ import axios from "axios";
 import "./_userForm.scss";
 
 class userForm extends Component {
-  state = {};
-  handleSubmit(vin_id) {
-    axios.post(
-      "https://qjn410lo43.execute-api.us-east-1.amazonaws.com/prototype",
-      {
-        vin: vin_id,
-        permission: true
-      }
-    );
+  constructor() {
+    super();
+    this.state = {
+      isapproved: false
+    };
+    this.updateState = this.updateState.bind(this);
+  }
+  updateState(e) {
+    console.log("ee" + e);
+    this.setState({ isapproved: e });
+    console.log("approved", this.state.isapproved);
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log("form submit");
+    axios
+      .post(
+        "https://qjn410lo43.execute-api.us-east-1.amazonaws.com/prototype",
+        {
+          vin: this.props.match.params.vin,
+          permission: this.state.isapproved ? true : false
+        }
+      )
+      .then(response => {
+        console.log("response data", response.data);
+      })
+      .catch(err => {
+        console.log("ERROR : " + err);
+      });
   }
   render() {
     return (
@@ -23,7 +43,7 @@ class userForm extends Component {
               <h3>User Form</h3>
             </div>
 
-            <form onSubmit={this.handleSubmit(this.props.match.params.vin)}>
+            <form onSubmit={e => this.handleSubmit(e)}>
               <div style={{ marginBottom: "3%" }}>
                 Please select one or more
               </div>
@@ -70,12 +90,19 @@ class userForm extends Component {
               </div>
               <div className="row">
                 <div className="col-4">
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={() => this.updateState(true)}
+                  >
                     Approve
                   </button>
                 </div>
                 <div className="col-4">
-                  <button type="submit" className="btn btn-danger">
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => this.updateState(false)}
+                  >
                     Reject
                   </button>
                 </div>
