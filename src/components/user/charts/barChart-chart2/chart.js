@@ -20,8 +20,12 @@ class Charts extends Component {
           data={this.state.chartData}
           options={{
             legend: {
-              display: this.props.displayLegend,
-              position: this.props.legendPosition
+              display: true,
+              position: "bottom",
+              labels: {
+                boxWidth: 10,
+                fontSize: 14
+              }
             },
             responsive: true,
             maintainAspectRatio: false,

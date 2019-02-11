@@ -1,5 +1,5 @@
 import React from "react";
-import { Line, Chart } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 import "../_chart.scss";
 
@@ -9,94 +9,11 @@ export default class lineChart extends React.Component {
     this.state = {
       lineChartData: {}
     };
-
-    // this.dataFirst = {
-    //   label: "Bears",
-    //   fill: false,
-    //   lineTension: 0.1,
-    //   backgroundColor: "rgb(75,192,192)",
-    //   borderColor: "rgb(75,192,192)",
-    //   borderCapStyle: "butt",
-    //   borderDash: [],
-    //   borderDashOffset: 0.0,
-    //   borderJoinStyle: "miter",
-    //   pointBorderColor: "rgb(75,192,192)",
-    //   pointBackgroundColor: "rgb(75,192,192)",
-    //   pointBorderWidth: 5,
-    //   pointHoverRadius: 5,
-    //   pointHoverBackgroundColor: "rgb(75,192,192)",
-    //   pointHoverBorderColor: "rgb(220,220,220)",
-    //   pointHoverBorderWidth: 2,
-    //   pointRadius: 1,
-    //   pointHitRadius: 10,
-    //   data: [65, 59, 80, 81, 56, 55, null]
-    // };
-    // this.dataSecond = {
-    //   label: "Dolphins",
-    //   fill: false,
-    //   lineTension: 0.1,
-    //   backgroundColor: "rgb(255, 00, 00)",
-    //   borderColor: "rgb(255, 00, 00)",
-    //   borderCapStyle: "butt",
-    //   borderDash: [],
-    //   borderDashOffset: 0.0,
-    //   borderJoinStyle: "miter",
-    //   pointBorderColor: "rgb(255, 00, 00)",
-    //   pointBackgroundColor: "rgb(255, 00, 00)",
-    //   pointBorderWidth: 5,
-    //   pointHoverRadius: 5,
-    //   pointHoverBackgroundColor: "rgb(255, 00, 00)",
-    //   pointHoverBorderColor: "rgb(255, 00, 00)",
-    //   pointHoverBorderWidth: 2,
-    //   pointRadius: 1,
-    //   pointHitRadius: 10,
-    //   data: [81, 56, 55, 65, 59, 80, null]
-    // };
-    // this.dataThird = {
-    //   label: "Whales",
-    //   fill: false,
-    //   lineTension: 0.1,
-    //   backgroundColor: "rgb(62, 57, 57)",
-    //   borderColor: "rgb(62, 57, 57)",
-    //   borderCapStyle: "butt",
-    //   borderDash: [],
-    //   borderDashOffset: 0.0,
-    //   borderJoinStyle: "miter",
-    //   pointBorderColor: "rgb(62, 57, 57)",
-    //   pointBackgroundColor: "rgb(62, 57, 57)",
-    //   pointBorderWidth: 5,
-    //   pointHoverRadius: 5,
-    //   pointHoverBackgroundColor: "rgb(62, 57, 57)",
-    //   pointHoverBorderColor: "rgb(62, 57, 57)",
-    //   pointHoverBorderWidth: 2,
-    //   pointRadius: 1,
-    //   pointHitRadius: 10,
-    //   data: [55, 65, 59, 81, 56, 80, null]
-    // };
-
-    // this.data = {
-    //   labels: ["2017", "2018", "2019", "2020", "2021", "2022", ""],
-    //   datasets: [this.dataFirst, this.dataSecond, this.dataThird]
-    // };
-    // Chart.plugins.register({
-    //   afterUpdate: function(chart) {
-    //     let offset = 17;
-    //     let model = null;
-    //     for (let i = 0; i < chart.config.data.datasets.length; i++) {
-    //       for (let j = 0; j < chart.config.data.datasets[i].data.length; j++) {
-    //         model = chart.config.data.datasets[i]._meta[0].data[j]._model;
-    //         model.x += offset;
-    //         model.controlPointNextX += offset;
-    //         model.controlPointPreviousX += offset;
-    //       }
-    //     }
-    //   }
-    // });
   }
 
   getLineChartData() {
     const dataFirst = {
-      label: "Bears",
+      label: "Engine",
       fill: false,
       lineTension: 0.1,
       backgroundColor: "rgb(75,192,192)",
@@ -117,7 +34,7 @@ export default class lineChart extends React.Component {
       data: [65, 59, 80, 81, 56, 55, null]
     };
     const dataSecond = {
-      label: "Dolphins",
+      label: "Gear",
       fill: false,
       lineTension: 0.1,
       backgroundColor: "rgb(255, 00, 00)",
@@ -138,7 +55,7 @@ export default class lineChart extends React.Component {
       data: [81, 56, 55, 65, 59, 80, null]
     };
     const dataThird = {
-      label: "Whales",
+      label: "Wheel",
       fill: false,
       lineTension: 0.1,
       backgroundColor: "rgb(62, 57, 57)",

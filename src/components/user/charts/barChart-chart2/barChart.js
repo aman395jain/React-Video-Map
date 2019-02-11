@@ -17,9 +17,10 @@ class barChart extends Component {
   getChartData() {
     this.setState({
       chartData: {
-        labels: ["18-24", "25-34", "35-44", "44-55", "55-64", "65+"],
+        labels: ["00-04", "05-08", "09-12", "13-16", "17-20", "21+"],
         datasets: [
           {
+            label: "Break Frequency",
             data: [20, 12, 8, 20, 12, 8],
             backgroundColor: [
               "rgb(0, 228, 228)",

@@ -1,8 +1,18 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "./_userForm.scss";
 
 class userForm extends Component {
   state = {};
+  handleSubmit(vin_id) {
+    axios.post(
+      "https://qjn410lo43.execute-api.us-east-1.amazonaws.com/prototype",
+      {
+        vin: vin_id,
+        permission: true
+      }
+    );
+  }
   render() {
     return (
       <div>
@@ -13,7 +23,7 @@ class userForm extends Component {
               <h3>User Form</h3>
             </div>
 
-            <form target="_blank">
+            <form onSubmit={this.handleSubmit(this.props.match.params.vin)}>
               <div style={{ marginBottom: "3%" }}>
                 Please select one or more
               </div>
@@ -65,7 +75,7 @@ class userForm extends Component {
                   </button>
                 </div>
                 <div className="col-4">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-danger">
                     Reject
                   </button>
                 </div>

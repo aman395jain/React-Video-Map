@@ -13,7 +13,7 @@ export default class DonutWithText extends React.Component {
   getDonutChartData() {
     this.setState({
       donutChartData: {
-        labels: ["trip1", "trip2", "trip3"],
+        labels: ["Safe", "Rash", "Moderate"],
         datasets: [
           {
             data: [22, 6, 10],
@@ -55,7 +55,7 @@ export default class DonutWithText extends React.Component {
 
         let text = chart.config.data.text,
           textX = Math.round((width - ctx.measureText(text).width) / 2),
-          textY = height / 2;
+          textY = 85;
 
         ctx.fillText(text, textX, textY);
       }
@@ -65,15 +65,19 @@ export default class DonutWithText extends React.Component {
         <Doughnut
           data={this.state.donutChartData}
           options={{
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                boxWidth: 10,
+                fontSize: 14
+              }
+            },
             cutoutPercentage: 70,
             responsive: true,
             maintainAspectRatio: false,
             animation: false,
-            hover: { intersect: false },
-
-            legend: {
-              display: false
-            }
+            hover: { intersect: false }
           }}
         />
       </div>

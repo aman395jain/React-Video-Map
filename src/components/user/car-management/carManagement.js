@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import ReactTable from "react-table";
 import { Link } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 
 import tableData from "../../../data/carData.json";
 import Header from "../../../shared/header/header.js";
-import Modalform from "./../forms/modalForm" 
+import Modalform from "./../forms/modalForm";
 
 class UserManagement extends Component {
   state = { selected: {}, selectAll: 0, data: [], openModal: false };
 
   componentDidMount() {
-    axios.get("https://rqnsxqzbok.execute-api.us-east-1.amazonaws.com/prototype").then(response => {
-      console.log("response data" ,response.data);
-      this.setState({ data: response.data });
-    }).catch(err => {
-      console.log("ERROR :: " + err);
-    })
+    axios
+      .get("https://rqnsxqzbok.execute-api.us-east-1.amazonaws.com/prototype")
+      .then(response => {
+        console.log("response data", response.data);
+        this.setState({ data: response.data });
+      })
+      .catch(err => {
+        console.log("ERROR :: " + err);
+      });
   }
 
   toggleRow(name) {
@@ -45,8 +48,7 @@ class UserManagement extends Component {
   }
 
   openModal(e) {
-  
-   this.refs.modalform.onOpenModal(e);
+    this.refs.modalform.onOpenModal(e);
   }
 
   userListColumn() {
@@ -57,15 +59,15 @@ class UserManagement extends Component {
         Cell: ({ original }) => {
           return (
             <div className="d-flex align-items-center">
-              <button onClick={() => this.openModal(original.vin)}
-                // to={{
-                //   pathname: "/modalform/" + original.vin,
-                //   param1: "Par1"
-                // }}
+              <Link
+                to={{
+                  pathname: "/carDetails/" + original.vin,
+                  param1: "Par1"
+                }}
                 className="car-name"
               >
                 {original.incident_no}
-              </button>
+              </Link>
             </div>
           );
         }
@@ -142,7 +144,6 @@ class UserManagement extends Component {
             </div>
           </div>
         </div>
-        <Modalform ref="modalform"></Modalform>
       </div>
     );
   }
