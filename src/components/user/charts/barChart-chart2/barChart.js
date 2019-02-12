@@ -3,6 +3,7 @@ import Charts from "./chart";
 import "../_chart.scss";
 
 class barChart extends Component {
+  state = {};
   constructor() {
     super();
     this.state = {

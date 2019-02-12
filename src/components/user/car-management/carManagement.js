@@ -2,19 +2,27 @@ import React, { Component } from "react";
 import ReactTable from "react-table";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { FadeLoader } from "react-spinners";
 
 import tableData from "../../../data/carData.json";
 import Header from "../../../shared/header/header.js";
 import Modalform from "./../forms/modalForm";
 
 class UserManagement extends Component {
-  state = { selected: {}, selectAll: 0, data: [], openModal: false };
+  state = {
+    selected: {},
+    selectAll: 0,
+    data: [],
+    openModal: false,
+    loadingSpinner: false
+  };
 
   componentDidMount() {
     axios
       .get("https://rqnsxqzbok.execute-api.us-east-1.amazonaws.com/prototype")
       .then(response => {
         console.log("response data", response.data);
+        this.setState({ loadingSpinner: true });
         this.setState({ data: response.data });
       })
       .catch(err => {
@@ -132,17 +140,23 @@ class UserManagement extends Component {
           <div className="row">
             <div className="col-sm-5">{this.renderTableRowActions()}</div>
           </div>
-          <div className="row">
-            <div className="col-12">
-              <ReactTable
-                className="user-list-table table-striped mt-3"
-                data={this.state.data}
-                columns={this.userListColumn()}
-                defaultPageSize={5}
-                id="table-to-xls"
-              />
+          {this.state.loadingSpinner ? (
+            <div className="row">
+              <div className="col-12">
+                <ReactTable
+                  className="user-list-table table-striped mt-3"
+                  data={this.state.data}
+                  columns={this.userListColumn()}
+                  defaultPageSize={5}
+                  id="table-to-xls"
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ position: "absolute", top: "50%", left: "50%" }}>
+              <FadeLoader height={15} width={5} margin="2px" radius={2} />
+            </div>
+          )}
         </div>
       </div>
     );

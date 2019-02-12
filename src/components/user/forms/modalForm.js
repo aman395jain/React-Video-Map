@@ -45,7 +45,12 @@ class ModalForm extends React.Component {
     const { open } = this.state;
     return (
       <div style={styles}>
-        <Modal open={open} onClose={this.onModal} closeOnEsc={false}>
+        <Modal
+          open={open}
+          onClose={this.onModal}
+          closeOnEsc={false}
+          showCloseIcon={false}
+        >
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title" id="exampleModalLabel">

@@ -4,6 +4,7 @@ import axios from "axios";
 import _ from "lodash";
 import Modal from "../forms/modalForm";
 import videojs from "video.js";
+import { FadeLoader } from "react-spinners";
 
 import LatiLognDetails from "../lati-long-details/latiLongDetails";
 import MapDetails from "../map-details/mapDetails";
@@ -17,7 +18,8 @@ class CarDetail extends Component {
   state = {
     url:
       "https://www.totaleclips.com/Player/Bounce.aspx?eclipid=e108119&bitrateid=449&vendorid=102&type=.mp4",
-    responseFlag: false
+    responseFlag: false,
+    loadingSpinner: {}
   };
 
   constructor(props) {
@@ -35,6 +37,7 @@ class CarDetail extends Component {
     this.setRoutes = this.setRoutes.bind(this);
     this.updateVideo = this.updateVideo.bind(this);
     this.isMapActive = 1;
+    this.state.loadingSpinner = false;
   }
   componentDidMount() {
     //console.log(componentDidMount)
@@ -48,19 +51,18 @@ class CarDetail extends Component {
       )
       .then(response => {
         console.log("data", typeof response.data.message);
+        this.setState({ loadingSpinner: true });
         if (
           response &&
           response.data &&
           typeof response.data.message === "undefined"
         ) {
-          console.log("hare in data");
           this.setState({ responseFlag: true });
           this.setState({ cardata: response.data });
           this.setState({ accidentData: response.data.accidentFlagData[0] });
           //this.setState({ camdata : response.data.cardata })
           this.updateVideo("carvin121212_cam1");
         } else {
-          console.log("hare in not data");
           this.refs.modalform.onOpenModal(this.props.match.params.vin);
         }
       })
@@ -128,7 +130,7 @@ class CarDetail extends Component {
       // Update the button text to 'Play'
       //  playPause.classList.toggle('pause');
     }
-    console.log("this.isPlayed", this.isPlayed);
+    // console.log("this.isPlayed", this.isPlayed);
   }
 
   renderSensor(streamData) {
@@ -149,69 +151,82 @@ class CarDetail extends Component {
   }
 
   render() {
-    return this.state.responseFlag ? (
-      <div className="car-details">
-        <div className="container">
-          <div className="row ">
-            <div className="col-12 d-flex">
-              <div className="car-image">
-                {this.renderSensor(this.state.cardata.streamData)}
-              </div>
-              <div className="car-video">
-                <div className="car-id">{this.props.match.params.vin}</div>
-                {/* <CarVideo videoOptions={this.state.videoJsOptions} /> */}
-                <div className="video-container">
-                  <video
-                    id="car-video"
-                    className="video-js vjs-default-skin"
-                    controls
-                    preload="auto"
-                    style={{ width: 100 + "%" }}
-                    data-setup="{}"
-                  />
+    return this.state.loadingSpinner ? (
+      this.state.responseFlag ? (
+        <div className="car-details">
+          <div className="container">
+            <div className="row ">
+              <div className="col-12 d-flex">
+                <div className="car-image">
+                  {this.renderSensor(this.state.cardata.streamData)}
+                </div>
+                <div className="car-video">
+                  <div className="car-id">{this.props.match.params.vin}</div>
+                  {/* <CarVideo videoOptions={this.state.videoJsOptions} /> */}
+                  <div className="video-container">
+                    <video
+                      id="car-video"
+                      className="video-js vjs-default-skin"
+                      controls
+                      preload="auto"
+                      style={{ width: 100 + "%" }}
+                      data-setup="{}"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="row"
-            style={{ marginTop: "34px", minHeight: "100px" }}
-          >
-            <div className="col-12 d-flex p-0">
-              <button onClick={this.setRoutes}>click me....</button>
-              {/* <button onClick={this.refs.googleMap.stopMovement}>stop....</button>
+            <div
+              className="row"
+              style={{ marginTop: "34px", minHeight: "100px" }}
+            >
+              <div className="col-12 d-flex p-0">
+                <button onClick={this.setRoutes}>click me....</button>
+                {/* <button onClick={this.refs.googleMap.stopMovement}>stop....</button>
             <button onClick={this.refs.googleMap.startMovement}>start....</button> */}
+              </div>
             </div>
-          </div>
-          <div className="row" style={{ marginTop: "34px", width: "1149px" }}>
-            <div className="col-12 d-flex p-0">
-              <LatiLognDetails
-                latlng={this.state.latlng}
-                accidentData={this.state.accidentData}
-              />
-              <GoogleMapComponent
-                ref="googleMap"
-                setLatLng={this.setLatLng}
-                Cardetails={this.state.cardata}
-              />
+            <div className="row" style={{ marginTop: "34px", width: "1149px" }}>
+              <div className="col-12 d-flex p-0">
+                <LatiLognDetails
+                  latlng={this.state.latlng}
+                  accidentData={this.state.accidentData}
+                />
+                <GoogleMapComponent
+                  ref="googleMap"
+                  setLatLng={this.setLatLng}
+                  Cardetails={this.state.cardata}
+                />
+              </div>
             </div>
-          </div>
-          <div className="row charts" style={{ marginTop: "18px" }}>
-            <div className="col-2 donutChart">
-              <DonutChart />
+            <div className="row charts" style={{ marginTop: "18px" }}>
+              <div className="col-2 donutChart">
+                <DonutChart />
+              </div>
+              <div className="col-2 barChart">
+                <BarChart />
+              </div>
+              <div className="col-5 lineChart">
+                <LineChart />
+              </div>
+              <div className="col-3" />
             </div>
-            <div className="col-2 barChart">
-              <BarChart />
-            </div>
-            <div className="col-5 lineChart">
-              <LineChart />
-            </div>
-            <div className="col-3" />
           </div>
         </div>
-      </div>
+      ) : (
+        <Modal ref="modalform" />
+      )
     ) : (
-      <Modal ref="modalform" />
+      <div style={{ position: "absolute", top: "50%", left: "50%" }}>
+        <FadeLoader
+          height={15}
+          heightUnit="px"
+          width={5}
+          widthUnit="px"
+          margin="2px"
+          radius={10}
+        />
+      </div>
     );
   }
 }
