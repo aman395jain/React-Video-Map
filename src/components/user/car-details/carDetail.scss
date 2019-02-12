@@ -1,19 +1,18 @@
 @import "~video.js/src/css/video-js.scss";
 
 .car-details {
-  background: url("../../../assets/images/04 Wireframe_Insurance Agent_Car Information Details_Dashboard_One Car.png")
-    top center no-repeat;
-  background-position-y: -117px;
+  background: url("../../../assets/images/Trillium_proto.png") top center
+    no-repeat;
   height: 1480px;
   padding-top: 228px;
-
+  
   .car-image {
     width: 408px;
     position: relative;
     .sensor {
       background: #de0303;
-      width: 25px;
-      height: 25px;
+      width: 13px;
+      height: 12px;
       display: block;
       position: absolute;
       border-radius: 100%;
@@ -21,8 +20,8 @@
       border: 2px solid #ff3b3b;
       cursor: pointer;
       &.pos-1 {
-        left: 27%;
-        top: 104px;
+        left: 22%;
+        top: 123px;
         background-color: #ff9600;
         border-color: #ffb346;
         transition: all 0.3s;
@@ -32,8 +31,8 @@
         }
       }
       &.pos-2 {
-        left: 61%;
-        top: 104px;
+        left: 44.5%;
+        top: 123px;
         background-color: #ff9600;
         border-color: #ffb346;
         &:hover {
@@ -74,8 +73,10 @@
     flex: 1 1;
     border-radius: 4px;
     position: relative;
-    margin-right: -4px;
-    height: 399px;
+    margin-right: -124px;
+    height: 472px;
+    top: -45px;
+    left: -109px;
     .video-container {
       height: 100%;
       .video-js {
@@ -100,12 +101,12 @@
 
   .lat-logn-details {
     background: #fff;
-    width: 608px;
+    width: 458px;
     padding: 20px;
     border-radius: 10px;
-    margin-right: 15px;
+    margin-right: 31px;
     margin-left: -7px;
-    height: 311px;
+    height: 375px;
     h2 {
       margin-bottom: 45px;
     }
@@ -163,23 +164,36 @@
     border-radius: 10px;
     .donutChart {
       background-color: white;
-      height: 220px;
-      margin-right: 53px;
+      height: 239px;
+      margin-right: 32px;
+      border-radius: 6px;
+      margin-top: 11px;
+      margin-left: -6px;
+      width: 265px;
     }
     .barChart {
       background-color: white;
-      height: 220px;
-      margin-right: 3%;
-      min-width: 19%;
-      padding-left: 0px;
+      height: 239px;
+      margin-right: 32px;
+      border-radius: 6px;
+      margin-top: 11px;
+      margin-left: -6px;
+      width: 272px;
     }
     .lineChart {
       background-color: white;
-      height: 220px;
+      height: 239px;
       margin: 0px;
       padding-left: 0px;
-      margin-top: 5px;
-      max-width: 39.66667% !important;
+      margin-top: 11px;
+      width: 361px;
+      border-radius: 6px;
+      .line-chart {
+        height: auto!important;
+      }
+      canvas {
+        width: 361px!important;
+      }
     }
   }
 }

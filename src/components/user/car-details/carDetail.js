@@ -178,7 +178,7 @@ class CarDetail extends Component {
             </div>
             <div
               className="row"
-              style={{ marginTop: "34px", minHeight: "100px" }}
+              style={{ marginTop: "-9px", minHeight: "100px" }}
             >
               <div className="col-12 d-flex p-0">
                 <button onClick={this.setRoutes}>click me....</button>
@@ -200,16 +200,15 @@ class CarDetail extends Component {
               </div>
             </div>
             <div className="row charts" style={{ marginTop: "18px" }}>
-              <div className="col-2 donutChart">
+              <div className="donutChart">
                 <DonutChart />
               </div>
-              <div className="col-2 barChart">
+              <div className="barChart">
                 <BarChart />
               </div>
-              <div className="col-5 lineChart">
+              <div className="lineChart">
                 <LineChart />
               </div>
-              <div className="col-3" />
             </div>
           </div>
         </div>
