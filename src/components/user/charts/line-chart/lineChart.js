@@ -37,22 +37,22 @@ export default class lineChart extends React.Component {
       label: "Gear",
       fill: false,
       lineTension: 0.1,
-      backgroundColor: "rgb(255, 00, 00)",
-      borderColor: "rgb(255, 00, 00)",
+      backgroundColor: "rgb(255,69,0)",
+      borderColor: "rgb(255,69,0)",
       borderCapStyle: "butt",
       borderDash: [],
       borderDashOffset: 0.0,
       borderJoinStyle: "miter",
-      pointBorderColor: "rgb(255, 00, 00)",
-      pointBackgroundColor: "rgb(255, 00, 00)",
+      pointBorderColor: "rgb(255,69,0)",
+      pointBackgroundColor: "rgb(255,69,0)",
       pointBorderWidth: 5,
       pointHoverRadius: 5,
-      pointHoverBackgroundColor: "rgb(255, 00, 00)",
-      pointHoverBorderColor: "rgb(255, 00, 00)",
+      pointHoverBackgroundColor: "rgb(255,69,0)",
+      pointHoverBorderColor: "rgb(255,69,0)",
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [81, 56, 55, 65, 59, 80, null]
+      data: [81, 46, 55, 65, 72, 80, null]
     };
     const dataThird = {
       label: "Wheel",
@@ -73,7 +73,7 @@ export default class lineChart extends React.Component {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [55, 65, 59, 81, 56, 80, null]
+      data: [30, 75, 65, 91, 38, 90, null]
     };
 
     const data = {
@@ -107,13 +107,13 @@ export default class lineChart extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-12 line-chart-header">Line Chart</div>
+          <div className="col-md-12 line-chart-header">Anomaly Detection</div>
           <div className="col-md-12 line-chart-container">
             <Line
               data={this.state.lineChartData}
               options={{
                 legend: {
-                  display: false,
+                  display: true,
                   position: "bottom",
                   labels: { boxWidth: 10 }
                 },
@@ -136,9 +136,8 @@ export default class lineChart extends React.Component {
                       ticks: {
                         beginAtZero: true,
                         stepSize: 20,
-                        min: 20,
                         max: 120,
-                        padding: 20,
+                        padding: 10,
                         fontSize: 13
                       },
                       gridLines: {

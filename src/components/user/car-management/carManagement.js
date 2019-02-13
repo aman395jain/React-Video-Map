@@ -156,7 +156,13 @@ class UserManagement extends Component {
                 </div>
               ) : (
                 <div style={{ position: "absolute", top: "50%", left: "50%" }}>
-                  <FadeLoader height={15} width={5} margin="2px" radius={2} />
+                  <FadeLoader
+                    height={15}
+                    width={5}
+                    margin="2px"
+                    radius={2}
+                    color="#ffffff"
+                  />
                 </div>
               )}
             </div>

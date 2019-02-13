@@ -17,13 +17,13 @@ class Charts extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-12 bar-chart-header">Doughnut Chart</div>
+          <div className="col-md-12 bar-chart-header">Break Frequency</div>
           <div className="col-md-12 bar-chart-container">
             <Bar
               data={this.state.chartData}
               options={{
                 legend: {
-                  display: false,
+                  display: true,
                   position: "bottom",
                   labels: {
                     boxWidth: 10,

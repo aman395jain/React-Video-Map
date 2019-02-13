@@ -432,6 +432,7 @@ class CarDetail extends Component {
           widthUnit="px"
           margin="2px"
           radius={10}
+          color="#ffffff"
         />
       </div>
     );

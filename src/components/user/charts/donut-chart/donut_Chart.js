@@ -20,12 +20,12 @@ export default class DonutWithText extends React.Component {
             backgroundColor: [
               "rgb(0, 228, 228)",
               "rgb(255, 00, 00)",
-              "rgb(62, 57, 57)"
+              "rgb(255,191,0)"
             ],
             hoverBackgroundColor: [
               "rgb(0, 228, 228)",
-              "rgba(255, 00, 00)",
-              "rgba(62, 57, 57)"
+              "rgb(255, 00, 00)",
+              "rgb(255,191,0)"
             ]
           }
         ],
@@ -51,12 +51,12 @@ export default class DonutWithText extends React.Component {
 
         let fontSize = 1;
         ctx.font = fontSize + "em sans-serif";
-        ctx.fillStyle = '#ffffff'
+        ctx.fillStyle = "#ffffff";
         ctx.textBaseline = "middle";
 
         let text = chart.config.data.text,
           textX = Math.round((width - ctx.measureText(text).width) / 2),
-          textY = 85;
+          textY = 80;
 
         ctx.fillText(text, textX, textY);
       }
@@ -64,7 +64,7 @@ export default class DonutWithText extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-12 donut-chart-header">Doughnut Chart</div>
+          <div className="col-md-12 donut-chart-header">Trip Analysis</div>
           <div className="col-md-12 donut-chart-container">
             <Doughnut
               data={this.state.donutChartData}
@@ -81,6 +81,14 @@ export default class DonutWithText extends React.Component {
                 responsive: true,
                 maintainAspectRatio: false,
                 animation: false,
+                legend: {
+                  display: true,
+                  position: "bottom",
+                  labels: {
+                    boxWidth: 10,
+                    fontSize: 14
+                  }
+                },
                 hover: { intersect: false }
               }}
             />
