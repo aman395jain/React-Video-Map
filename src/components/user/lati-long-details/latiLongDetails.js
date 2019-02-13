@@ -32,23 +32,33 @@ class LatiLognDetails extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-md-6 lat-long-col">
+            {/* <div className="col-md-6 lat-long-col">
               <div className="row lat-long-padding">
                 <div className="col-md-12 lat-long-title">Date</div>
               </div>
               <div className="row">
                 <div className="col-md-12 lat-long-title-text">20 Oct 2018</div>
               </div>
+            </div> */}
+             <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">Logitude</div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">
+                  {this.state.CarDetails.lng}
+                </div>
+              </div>
             </div>
           </div>
-          <div className="row lat-long-row">
+          {/* <div className="row lat-long-row">
             <div className="col-md-6 lat-long-col">
               <div className="row lat-long-padding">
                 <div className="col-md-12 lat-long-title">Logitude</div>
               </div>
               <div className="row">
                 <div className="col-md-12 lat-long-title-text">
-                  {this.state.CarDetails.lat}
+                  {this.state.CarDetails.lng}
                 </div>
               </div>
             </div>
@@ -80,7 +90,7 @@ class LatiLognDetails extends React.Component {
                 <div className="col-md-12 lat-long-title-text">00:30:00</div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row lat-long-row">
             <div className="col-md-6 lat-long-col">
               <div className="row lat-long-padding">

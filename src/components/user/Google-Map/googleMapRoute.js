@@ -44,20 +44,23 @@ export default class GoogleMapComponent extends React.Component {
     this.index = 0;
     this.startLoc = [];
     this.endLoc = [];
+    this.accidentCoordinates = null;
 
     this.lastVertex = 1;
     this.step = 50; // 5; // metres
     this.eol = [];
+    // this.car =``
     this.car =
       "M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z";
     this.icon = {
       path: this.car,
       scale: 0.7,
-      strokeColor: "white",
+      strokeColor: "black",
       strokeWeight: 0.1,
       fillOpacity: 1,
-      fillColor: "#404040",
+      fillColor: "blue",
       offset: "5%",
+      zIndex:100,
       // rotation: parseInt(heading[i]),
       anchor: new window.google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
     };
@@ -289,20 +292,25 @@ export default class GoogleMapComponent extends React.Component {
       let cardata =
         this.props.Cardetails && this.props.Cardetails.gpsData
           ? this.props.Cardetails.gpsData.map(item => {
-              return {
-                location: new window.google.maps.LatLng(
-                  item.latitude,
-                  item.longitude
-                ),
-                stopover: false
-              };
-            })
+            return {
+              location: new window.google.maps.LatLng(
+                item.latitude,
+                item.longitude
+              ),
+              stopover: false
+            };
+          })
           : [];
-
+      if (this.props.Cardetails && this.props.Cardetails.accidentFlagData && this.props.Cardetails.accidentFlagData.length > 0) {
+        this.accidentCoordinates = new window.google.maps.LatLng(this.props.Cardetails.accidentFlagData[0].latitude,
+          this.props.Cardetails.accidentFlagData[0].longitude)
+      }
+      console.log("accidentCoordinates", this.accidentCoordinates);
       this.setState({ routeArray: cardata });
       console.log("cardata", cardata);
       const map = new window.google.maps.Map(document.getElementById("map"), {
-        zoom: 10
+        zoom: 10,
+        streetViewControl: false
       });
 
       // let address = 'New Delhi'
@@ -314,6 +322,9 @@ export default class GoogleMapComponent extends React.Component {
       // });
       if (map) {
         this.props.resetMap(map);
+        if (this.accidentCoordinates) {
+          this.createMarker(map, this.accidentCoordinates, "", "", 1)
+        }
         resolve(map);
       }
       reject("Map not initialized");
@@ -420,7 +431,7 @@ export default class GoogleMapComponent extends React.Component {
       self.startAnimation(routeNum);
       return;
     }
-    return function(response, status) {
+    return function (response, status) {
       // if directions service successfully returns and no polylines exist already, then do the following
       if (status == window.google.maps.DirectionsStatus.ZERO_RESULTS) {
         console.log("No routes available for selected locations");
@@ -450,14 +461,13 @@ export default class GoogleMapComponent extends React.Component {
         var legs = response.routes[0].legs;
         // directionsrenderer renders the directions obtained previously by the directions service
         disp = new window.google.maps.DirectionsRenderer(rendererOptions);
-        disp.setMap(map);
-        disp.setDirections(response);
-        self.computeTotalDistance(response);
-        let distances = _.flatMap(response.routes, route =>
-          _.flatMap(route.legs, leg => leg.distance.value)
-        );
+        
+        // self.computeTotalDistance(response);
+        // let distances = _.flatMap(response.routes, route =>
+        //   _.flatMap(route.legs, leg => leg.distance.value)
+        // );
 
-        console.log("Total distance", _.sum(distances));
+        //console.log("Total distance", _.sum(distances));
         // create Markers
         for (let i = 0; i < legs.length; i++) {
           // for first marker only
@@ -475,13 +485,18 @@ export default class GoogleMapComponent extends React.Component {
           self.endLocation[routeNum].latlng = legs[i].end_location;
           self.endLocation[routeNum].address = legs[i].end_address;
           var steps = legs[i].steps;
+          console.log("steps", steps);
           for (let j = 0; j < steps.length; j++) {
             let nextSegment = steps[j].path;
             for (let k = 0; k < nextSegment.length; k++) {
+              console.log("nextSegment", nextSegment[k]);
               self.polyLine[routeNum].getPath().push(nextSegment[k]);
             }
           }
         }
+
+        disp.setMap(map);
+        disp.setDirections(response);
       }
       if (self.polyLine[routeNum]) {
         // render the line to map
@@ -497,18 +512,33 @@ export default class GoogleMapComponent extends React.Component {
   }
 
   // returns the marker
-  createMarker(map, latlng, label, html) {
+  createMarker(map, latlng, label, html, icon) {
     var contentString = "<b>" + label + "</b><br>" + html;
-    // using Marker api, marker is created
-    var marker = new window.google.maps.Marker({
+    let options = {
       position: latlng,
       map: map,
       title: label,
       zIndex: 10
-    });
+    };
+
+    if (icon == 1) {
+      var image = {
+        url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        // This marker is 20 pixels wide by 32 pixels high.
+        size: new window.google.maps.Size(20, 32),
+        // The origin for this image is (0, 0).
+        origin: new window.google.maps.Point(0, 0),
+        // The anchor for this image is the base of the flagpole at (0, 32).
+        anchor: new window.google.maps.Point(0, 32)
+      };
+      options.icon = image;
+
+    }
+    // using Marker api, marker is created
+    var marker = new window.google.maps.Marker(options);
     marker.myname = label;
     // adding click listener to open up info window when marker is clicked
-    window.google.maps.event.addListener(marker, "click", function() {
+    window.google.maps.event.addListener(marker, "click", function () {
       // this.infoWindow.setContent(contentString);
       // this.infoWindow.open(map, marker);
     });
@@ -584,8 +614,8 @@ export default class GoogleMapComponent extends React.Component {
     //console.log("this.poly2",this.poly2);
     let self = this;
     this.timerHandle[index] = setTimeout(() => {
-      self.animate(index, d + 20);
-    }, tick || 200);
+      self.animate(index, d + 2);
+    }, tick || 745);
   }
 
   // start marker movement by updating marker position every 100 milliseconds i.e. tick value
@@ -620,7 +650,7 @@ export default class GoogleMapComponent extends React.Component {
     console.log("this.d", this.d);
     this.timerHandle[this.index] = setTimeout(() => {
       this.animate(this.index, this.d);
-    }, 2000);
+    }, 0);
   }
 
   resetStartingPosition() {
@@ -633,6 +663,10 @@ export default class GoogleMapComponent extends React.Component {
 
   calculateTimetotravel() {
     this.state.timeToTravel = 10;
+  }
+
+  calculateTimetotravel(){
+    
   }
 
   render() {
