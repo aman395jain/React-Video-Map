@@ -11,33 +11,37 @@
     position: relative;
     .sensor {
       background: #de0303;
-      width: 13px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
       display: block;
       position: absolute;
       border-radius: 100%;
       text-align: center;
       border: 2px solid #ff3b3b;
       cursor: pointer;
+      transition: all 0.3s;
+      &.active {
+        background-color: #0090a5 !important;
+        border-color: rgba(77, 232, 255, 0.4) !important;
+      }
       &.pos-1 {
-        left: 22%;
-        top: 123px;
+        left: 33%;
+        top: 45px;
         background-color: #ff9600;
         border-color: #ffb346;
-        transition: all 0.3s;
         &:hover {
-          background-color: #de0303;
-          border-color: #ff3b3b;
+          background-color: #0090a5;
+          border-color: rgba(77, 232, 255, 0.4);
         }
       }
       &.pos-2 {
-        left: 44.5%;
-        top: 123px;
+        left: 33.5%;
+        top: 61.5%;
         background-color: #ff9600;
         border-color: #ffb346;
         &:hover {
-          background-color: #de0303;
-          border-color: #ff3b3b;
+          background-color: #0090a5;
+          border-color: rgba(77, 232, 255, 0.4);
         }
       }
       &.pos-3 {
@@ -297,35 +301,31 @@
       .line-chart-container {
         height: 174px;
         margin-top: 20px;
+        .line-chart {
+          height: auto !important;
+        }
+        canvas {
+          width: 361px !important;
+        }
       }
     }
   }
-}
-.permission-access {
-  .center-Container {
-    position: relative;
-    height: 100%;
-  }
+  .permission-access {
+    .center-Container {
+      position: relative;
+      height: 100%;
+    }
 
-  .absolute-Center {
-    width: 50%;
-    height: 50%;
-    overflow: auto;
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    .absolute-Center {
+      width: 50%;
+      height: 50%;
+      overflow: auto;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
   }
-}
-.vjs_video_3-dimensions {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.styles_modal__gNwvD {
-  position: absolute;
-  left: 20%;
-  top: 5%;
 }

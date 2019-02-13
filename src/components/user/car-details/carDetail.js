@@ -32,7 +32,9 @@ class CarDetail extends Component {
       //videoUrl:"https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8",
       controlBar: {
         inputRangeVal: 0
-      }
+      },
+      isActiveCam1: false,
+      isActiveCam2: false
     };
     const id = props.match.params.vin;
     //this.updateVideo("carvin121212_cam1");
@@ -82,6 +84,15 @@ class CarDetail extends Component {
 
   updateVideo(camName) {
     this.player = videojs("car-video");
+    console.log("camName", camName);
+    // set class active on sensor when user click on campra
+    if (camName === "carvin121212_cam1") {
+    } else if (camName === "carvin121212_cam2") {
+      this.setState({
+        isActiveCam1: false,
+        isActiveCam2: true
+      });
+    }
     if (this.state.cardata) {
       console.log(
         "this.state.cardata.streamData",
@@ -157,17 +168,30 @@ class CarDetail extends Component {
   renderSensor(streamData) {
     if (streamData) {
       return streamData.map((data, i) => {
+        let activeClass = i === 0 ? "active" : "";
         i++;
+
         const classN = `sensor pos-${i}`;
         return (
           <span
             key={i}
             className={classN}
-            onClick={() => this.updateVideo(data.name)}
+            onClick={e => {
+              this.updateVideo(data.name);
+              this.setActiveClass(e, i);
+            }}
           />
         );
       });
     }
+  }
+  // Add class 'active' on camra when user click on it
+  setActiveClass(event) {
+    const allSensorEle = document.querySelectorAll(".car-image .sensor");
+    allSensorEle.forEach((ele, i) => {
+      ele.classList.remove("active");
+    });
+    event.target.classList.add("active");
   }
 
   // Custom control bar start

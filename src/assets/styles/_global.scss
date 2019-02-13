@@ -87,6 +87,9 @@ body {
     .vjs-slider {
       background-color: #505163;
     }
+    .vjs-menu-button {
+      display: none;
+    }
   }
   .vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
     opacity: 1;
