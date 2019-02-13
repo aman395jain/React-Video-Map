@@ -95,6 +95,18 @@ body {
   .vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
     opacity: 1;
   }
+  .sizing-medium {
+    .state-loading-metadata {
+      background: blue;
+      &::after {
+        content: "sssssssssssssssss";
+        position: absolute;
+        width: 100px;
+        height: 20px;
+        background: red;
+      }
+    }
+  }
 }
 
 .car-details .video-js .vjs-big-play-button .vjs-icon-placeholder:before,

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import "./carDetail.scss";
 import axios from "axios";
 import _ from "lodash";
@@ -33,16 +34,14 @@ class CarDetail extends Component {
       controlBar: {
         inputRangeVal: 0
       },
-      isActiveCam1: false,
-      isActiveCam2: false,
       videoEnableFlag: false,
       mapEnableFlag: false,
-      chartEnableFlag: false
+      chartEnableFlag: false,
+      resetdom: false
     };
     const id = props.match.params.vin;
     //this.updateVideo("carvin121212_cam1");
     this.setLatLng = this.setLatLng.bind(this);
-    this.setRoutes = this.setRoutes.bind(this);
     this.updateVideo = this.updateVideo.bind(this);
     this.isMapActive = 1;
     this.state.loadingSpinner = false;
@@ -66,6 +65,7 @@ class CarDetail extends Component {
         // );
         this.setState({ loadingSpinner: true });
         if (response && response.data) {
+          // Remove spinner
           console.warn(
             "vccvhckcgvbnm" + " " + typeof response.data.carSpeedData
           );
@@ -119,15 +119,9 @@ class CarDetail extends Component {
 
   updateVideo(camName) {
     this.player = videojs("car-video");
+
     console.log("camName", camName);
-    // set class active on sensor when user click on campra
-    if (camName === "carvin121212_cam1") {
-    } else if (camName === "carvin121212_cam2") {
-      this.setState({
-        isActiveCam1: false,
-        isActiveCam2: true
-      });
-    }
+
     if (this.state.cardata) {
       console.log(
         "this.state.cardata.streamData",
@@ -157,11 +151,20 @@ class CarDetail extends Component {
     }
     // update seekbar
     // this.player.on("timeupdate", this.seekTimeUpdate);
+    // Pause video if playing
+    this.player.pause();
     // sync map with video
+
+    this.refs.googleMap.setRoutes();
+    this.refs.googleMap.resetStartingPosition();
+    this.setLatLng({ lat: () => 0, lng: () => 0 });
     this.player.on("play", () => {
       if (this.isMapActive === 1) {
-        this.refs.googleMap.setRoutes();
+        this.refs.googleMap.startAnimation(this.map, 0);
+
+        // this.refs.googleMap.setRoutes();
         this.isMapActive = 2;
+        console.log("playyyyyyyyyyy");
       }
       if (this.isMapActive === 3) {
         this.refs.googleMap.startMovement();
@@ -174,31 +177,11 @@ class CarDetail extends Component {
         this.isMapActive = 3;
       }
     });
-
-    console.log(this.player);
   }
-  setRoutes() {
-    // this.refs.googleMap.setRoutes();
-    if (this.player.userActive_ && this.isMapActive == 1) {
-      // Play the video
-      this.player.play();
-      this.refs.googleMap.setRoutes();
-      this.isMapActive = 2;
-    } else if (this.isMapActive == 2) {
-      this.player.pause();
-      this.refs.googleMap.stopMovement();
-      this.isMapActive = 3;
-    } else {
-      // Pause the video
-      this.player.play();
-      this.refs.googleMap.startMovement();
-      this.isMapActive = 2;
 
-      // Update the button text to 'Play'
-      //  playPause.classList.toggle('pause');
-    }
-    // console.log("this.isPlayed", this.isPlayed);
-  }
+  onMap = map => {
+    this.map = map;
+  };
 
   renderSensor(streamData) {
     if (streamData) {
@@ -314,8 +297,6 @@ class CarDetail extends Component {
     }
   };
 
-  //render the video and map on flags
-
   videoRender() {
     if (this.state.videoEnableFlag) {
       return (
@@ -344,13 +325,9 @@ class CarDetail extends Component {
           <div
             className="row"
             style={{ marginTop: "-9px", minHeight: "100px" }}
-          >
-            {/* <div className="col-12 d-flex p-0">
-              <button onClick={this.setRoutes}>click me....</button>
-            </div> */}
-          </div>
+          />
           <div className="row" style={{ marginTop: "34px", width: "1149px" }}>
-            <div className="col-12 d-flex p-0">
+            <div className="col-12 d-flex p-0" id="map-details">
               <LatiLognDetails
                 latlng={this.state.latlng}
                 accidentData={this.state.accidentData}
@@ -359,6 +336,7 @@ class CarDetail extends Component {
                 ref="googleMap"
                 setLatLng={this.setLatLng}
                 Cardetails={this.state.cardata}
+                resetMap={this.onMap}
               />
             </div>
           </div>

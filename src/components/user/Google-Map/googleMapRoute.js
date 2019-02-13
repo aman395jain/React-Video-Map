@@ -30,6 +30,7 @@ export default class GoogleMapComponent extends React.Component {
     this.stopMovement = this.stopMovement.bind(this);
     this.startMovement = this.startMovement.bind(this);
     this.computeTotalDistance = this.computeTotalDistance.bind(this);
+    this.resetStartingPosition = this.resetStartingPosition.bind(this);
 
     this.map = null;
     this.directionsService = null;
@@ -312,6 +313,7 @@ export default class GoogleMapComponent extends React.Component {
       //   map.fitBounds(results[0].geometry.viewport);
       // });
       if (map) {
+        this.props.resetMap(map);
         resolve(map);
       }
       reject("Map not initialized");
@@ -488,7 +490,7 @@ export default class GoogleMapComponent extends React.Component {
         console.log("routeNum", routeNum);
         // and start animation
         setTimeout(() => {
-          self.startAnimation(map, routeNum);
+          // self.startAnimation(map, routeNum);
         }, 2000);
       }
     };
@@ -551,7 +553,12 @@ export default class GoogleMapComponent extends React.Component {
       this.marker[index].setPosition(this.endLocation[index].latlng);
       return;
     }
-    this.d = d;
+    if (typeof this.d !== "undefined" && this.d > 0 && !this.IsSameRoute) {
+      console.log("inside animate", this.d);
+    } else {
+      this.d = d;
+    }
+
     // console.log("d", d);
     var p = this.polyLine[index].GetPointAtDistance(d);
     //console.log('p',p.lat(),p.lng());
@@ -567,7 +574,7 @@ export default class GoogleMapComponent extends React.Component {
       lastPosn,
       p
     );
-    console.log("computeDistanceBetween", distance);
+    // console.log("computeDistanceBetween", distance);
     this.icon.rotation = heading;
     this.marker[index].setIcon(this.icon);
     //console.log("currentPosition",currentPosition);
@@ -578,7 +585,7 @@ export default class GoogleMapComponent extends React.Component {
     let self = this;
     this.timerHandle[index] = setTimeout(() => {
       self.animate(index, d + 20);
-    }, tick || 100);
+    }, tick || 200);
   }
 
   // start marker movement by updating marker position every 100 milliseconds i.e. tick value
@@ -614,6 +621,14 @@ export default class GoogleMapComponent extends React.Component {
     this.timerHandle[this.index] = setTimeout(() => {
       this.animate(this.index, this.d);
     }, 2000);
+  }
+
+  resetStartingPosition() {
+    this.IsSameRoute = true;
+    console.log("this.d", this.d);
+    if (this.d > 0) {
+      this.d = 1;
+    }
   }
 
   calculateTimetotravel() {

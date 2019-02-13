@@ -4,7 +4,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 class LatiLognDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { CarDetails: {} };
+    this.state = { CarDetails: { lat: 0, lng: 0 } };
   }
 
   componentDidMount() {
