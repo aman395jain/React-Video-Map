@@ -26,7 +26,7 @@ class CarDetail extends Component {
     super(props);
 
     this.state = {
-      latlng: {},
+      latlng: { lat: 0, lng: 0 },
       cardata: {},
       accidentData: {},
       //videoUrl:"https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8",

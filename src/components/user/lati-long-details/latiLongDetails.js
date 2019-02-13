@@ -1,4 +1,5 @@
 import React from "react";
+import PerfectScrollbar from "perfect-scrollbar";
 
 class LatiLognDetails extends React.Component {
   constructor(props) {
@@ -6,44 +7,112 @@ class LatiLognDetails extends React.Component {
     this.state = { CarDetails: {} };
   }
 
+  componentDidMount() {
+    const container = document.querySelector("#lat-long-container");
+    const ps = new PerfectScrollbar(container);
+  }
+
   render() {
     this.state.CarDetails = this.props.latlng;
     console.log("in latlong", this.state);
     return (
-      <div className="lat-logn-details">
-        <h2>Lat-Long Details</h2>
-        <div className="d-flex align-items-center">
-          <label>Latitude</label>
-          <label>{this.state.CarDetails.lat}</label>
-          <span className="column">Date </span>
-          <span>20 Oct 2018</span>
+      <div className="row lat-logn-details">
+        <div className="col-md-12 lat-long-header">
+          <span>Latitude and Longitude</span>
         </div>
-        <div className="d-flex align-items-center">
-          <label>Longitude</label>
-          <label>{this.state.CarDetails.lng}</label>
-          <span className="column">Timeframe </span>
-          <span>10:00-10:30 AM</span>
-        </div>
-
-        <div className="d-flex align-items-center">
-          <label>Video Position</label>
-          <label />
-          <span className="column">Video Length </span>
-          <span>00:30:00</span>
-        </div>
-        <div className="d-flex align-items-center">
-          <label>Accident DateTime</label>
-          <label>
-            {this.props.accidentData ? this.props.accidentData.dateTime : ""}
-          </label>
-          <span className="column">Accident Position</span>
-          <span>
-            {this.props.accidentData
-              ? this.props.accidentData.latitude +
-                " " +
-                this.props.accidentData.longitude
-              : ""}
-          </span>
+        <div className="col-md-12 lat-long-container" id="lat-long-container">
+          <div className="row lat-long-row">
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">Latitude</div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">
+                  {this.state.CarDetails.lat}
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">Date</div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">20 Oct 2018</div>
+              </div>
+            </div>
+          </div>
+          <div className="row lat-long-row">
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">Logitude</div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">
+                  {this.state.CarDetails.lat}
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">Timeframe</div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">
+                  10:00-10:30 AM
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row lat-long-row">
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">Video Position</div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">00:00:00</div>
+              </div>
+            </div>
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">Video Length</div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">00:30:00</div>
+              </div>
+            </div>
+          </div>
+          <div className="row lat-long-row">
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">
+                  Accident DateTime
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">
+                  {this.props.accidentData
+                    ? this.props.accidentData.dateTime
+                    : ""}
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 lat-long-col">
+              <div className="row lat-long-padding">
+                <div className="col-md-12 lat-long-title">
+                  Accident Position
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 lat-long-title-text">
+                  {this.props.accidentData
+                    ? this.props.accidentData.latitude +
+                      " " +
+                      this.props.accidentData.longitude
+                    : ""}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

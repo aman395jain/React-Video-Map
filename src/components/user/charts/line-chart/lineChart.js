@@ -58,18 +58,18 @@ export default class lineChart extends React.Component {
       label: "Wheel",
       fill: false,
       lineTension: 0.1,
-      backgroundColor: "rgb(62, 57, 57)",
-      borderColor: "rgb(62, 57, 57)",
+      backgroundColor: "#2087ff",
+      borderColor: "#2087ff",
       borderCapStyle: "butt",
       borderDash: [],
       borderDashOffset: 0.0,
       borderJoinStyle: "miter",
-      pointBorderColor: "rgb(62, 57, 57)",
-      pointBackgroundColor: "rgb(62, 57, 57)",
+      pointBorderColor: "#2087ff",
+      pointBackgroundColor: "#2087ff",
       pointBorderWidth: 5,
       pointHoverRadius: 5,
-      pointHoverBackgroundColor: "rgb(62, 57, 57)",
-      pointHoverBorderColor: "rgb(62, 57, 57)",
+      pointHoverBackgroundColor: "#2087ff",
+      pointHoverBorderColor: "#2087ff",
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
@@ -105,46 +105,52 @@ export default class lineChart extends React.Component {
     //   }
     // });
     return (
-      <div className="line-chart">
-        <Line
-          data={this.state.lineChartData}
-          options={{
-            legend: {
-              position: "bottom",
-              labels: { boxWidth: 10 }
-            },
-            responsive: true,
-            animation: false,
-            scales: {
-              xAxes: [
-                {
-                  gridLines: {
-                    offsetGridLines: true,
-                    display: false
-                  },
-                  ticks: {
-                    labelOffset: 10
-                  }
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12 line-chart-header">Line Chart</div>
+          <div className="col-md-12 line-chart-container">
+            <Line
+              data={this.state.lineChartData}
+              options={{
+                legend: {
+                  display: false,
+                  position: "bottom",
+                  labels: { boxWidth: 10 }
+                },
+                responsive: true,
+                animation: false,
+                scales: {
+                  xAxes: [
+                    {
+                      gridLines: {
+                        offsetGridLines: true,
+                        display: false
+                      },
+                      ticks: {
+                        labelOffset: 10
+                      }
+                    }
+                  ],
+                  yAxes: [
+                    {
+                      ticks: {
+                        beginAtZero: true,
+                        stepSize: 20,
+                        min: 20,
+                        max: 120,
+                        padding: 20,
+                        fontSize: 13
+                      },
+                      gridLines: {
+                        drawBorder: false
+                      }
+                    }
+                  ]
                 }
-              ],
-              yAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                    stepSize: 20,
-                    min: 0,
-                    max: 200,
-                    padding: 20,
-                    fontSize: 13
-                  },
-                  gridLines: {
-                    drawBorder: false
-                  }
-                }
-              ]
-            }
-          }}
-        />
+              }}
+            />
+          </div>
+        </div>
       </div>
     );
   }

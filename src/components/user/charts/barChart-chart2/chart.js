@@ -15,53 +15,58 @@ class Charts extends Component {
 
   render() {
     return (
-      <div className="bar-chart">
-        <Bar
-          data={this.state.chartData}
-          options={{
-            legend: {
-              display: true,
-              position: "bottom",
-              labels: {
-                boxWidth: 10,
-                fontSize: 14
-              }
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                    stepSize: 10,
-                    min: 0,
-                    max: 30,
-                    padding: 5,
-                    callback: function(value) {
-                      return ((value / 100) * 100).toFixed(0) + "%";
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12 bar-chart-header">Doughnut Chart</div>
+          <div className="col-md-12 bar-chart-container">
+            <Bar
+              data={this.state.chartData}
+              options={{
+                legend: {
+                  display: false,
+                  position: "bottom",
+                  labels: {
+                    boxWidth: 10,
+                    fontSize: 14
+                  }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  yAxes: [
+                    {
+                      ticks: {
+                        beginAtZero: true,
+                        stepSize: 10,
+                        min: 0,
+                        max: 30,
+                        padding: 5,
+                        callback: function(value) {
+                          return ((value / 100) * 100).toFixed(0) + "%";
+                        }
+                      },
+                      gridLines: {
+                        drawBorder: false
+                      }
                     }
-                  },
-                  gridLines: {
-                    drawBorder: false
-                  }
+                  ],
+                  xAxes: [
+                    {
+                      gridLines: {
+                        display: false
+                      }
+                    }
+                  ]
+                },
+                animation: {
+                  duration: 0,
+                  animateRotate: false,
+                  animateScale: false
                 }
-              ],
-              xAxes: [
-                {
-                  gridLines: {
-                    display: false
-                  }
-                }
-              ]
-            },
-            animation: {
-              duration: 0,
-              animateRotate: false,
-              animateScale: false
-            }
-          }}
-        />
+              }}
+            />
+          </div>
+        </div>
       </div>
     );
   }

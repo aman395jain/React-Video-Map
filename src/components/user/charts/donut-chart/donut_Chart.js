@@ -29,7 +29,7 @@ export default class DonutWithText extends React.Component {
             ]
           }
         ],
-        text: "38 Total Trips"
+        text: "38 Trips"
       }
     });
   }
@@ -51,6 +51,7 @@ export default class DonutWithText extends React.Component {
 
         let fontSize = 1;
         ctx.font = fontSize + "em sans-serif";
+        ctx.fillStyle = '#ffffff'
         ctx.textBaseline = "middle";
 
         let text = chart.config.data.text,
@@ -61,25 +62,30 @@ export default class DonutWithText extends React.Component {
       }
     });
     return (
-      <div className="donut-chart">
-        <Doughnut
-          data={this.state.donutChartData}
-          options={{
-            legend: {
-              display: true,
-              position: "bottom",
-              labels: {
-                boxWidth: 10,
-                fontSize: 14
-              }
-            },
-            cutoutPercentage: 70,
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: false,
-            hover: { intersect: false }
-          }}
-        />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12 donut-chart-header">Doughnut Chart</div>
+          <div className="col-md-12 donut-chart-container">
+            <Doughnut
+              data={this.state.donutChartData}
+              options={{
+                legend: {
+                  display: false,
+                  position: "bottom",
+                  labels: {
+                    boxWidth: 10,
+                    fontSize: 14
+                  }
+                },
+                cutoutPercentage: 70,
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                hover: { intersect: false }
+              }}
+            />
+          </div>
+        </div>
       </div>
     );
   }
