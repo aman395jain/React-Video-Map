@@ -53,32 +53,39 @@ class ModalForm extends React.Component {
           closeOnEsc={false}
           showCloseIcon={false}
         >
-          <div className="modal-content">
-            <div className="modal-header">
+          <div className="modal-content access-request-modal">
+            {/* <div className="modal-header">
               <h4 className="modal-title" id="exampleModalLabel">
                 Permission Access
               </h4>
-            </div>
-            <div className="modal-body">
-              You are not authorized to access the content of the page. Please
-              click on Access request for approval.
+            </div> */}
+            <div className="modal-body access-request-modal-body">
+              You do not have required rights to access the car details.
             </div>
             <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => this.openPermissionForm()}
-              >
-                Request Access
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                data-dismiss="modal"
-                onClick={this.onCloseModal}
-              >
-                Cancel
-              </button>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-6">
+                    <button
+                      type="button"
+                      className="access-request-btn btn-cancel"
+                      data-dismiss="modal"
+                      onClick={this.onCloseModal}
+                    >
+                      CANCEL
+                    </button>
+                  </div>
+                  <div className="col-md-6">
+                    <button
+                      type="button"
+                      className="access-request-btn btn-access"
+                      onClick={() => this.openPermissionForm()}
+                    >
+                      ACCESS REQUEST
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </Modal>
