@@ -44,3 +44,58 @@ body {
   margin-top: 2%;
   margin-bottom: 0%;
 }
+
+// --- Video Cotrol bar ----
+.car-details {
+  .video-js {
+    .vjs-big-play-button {
+      display: none;
+    }
+  }
+}
+.car-details {
+  .video-js {
+    .vjs-control-bar {
+      display: flex !important;
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0.1s;
+      height: 111px;
+      bottom: -141px;
+      width: 1039px;
+      left: -203px;
+      font-size: 23px;
+      align-items: center;
+      background: #333546;
+      border-radius: 5px;
+    }
+    .vjs-volume-panel {
+      display: none;
+    }
+    .vjs-time-control {
+      height: auto;
+      background: transparent;
+      border-radius: 30px;
+      line-height: 1;
+      font-size: 18px;
+      padding: 10px 15px;
+      border: 2px solid #494a5c;
+    }
+    .vjs-play-progress {
+      background-color: #c22e3c;
+    }
+    .vjs-slider {
+      background-color: #505163;
+    }
+  }
+  .vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
+    opacity: 1;
+  }
+}
+
+.car-details .video-js .vjs-big-play-button .vjs-icon-placeholder:before,
+.car-details .vjs-button > .vjs-icon-placeholder:before,
+.car-details .video-js .vjs-modal-dialog,
+.car-details .vjs-modal-dialog .vjs-modal-dialog-content {
+  position: static;
+}

@@ -552,7 +552,7 @@ export default class GoogleMapComponent extends React.Component {
       return;
     }
     this.d = d;
-    console.log("d", d);
+    // console.log("d", d);
     var p = this.polyLine[index].GetPointAtDistance(d);
     //console.log('p',p.lat(),p.lng());
 

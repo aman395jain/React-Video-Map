@@ -110,11 +110,29 @@ class CarDetail extends Component {
       console.log("this.videoJsOptions", videodetails);
     }
     // update seekbar
-    this.player.on("timeupdate", this.seekTimeUpdate);
+    // this.player.on("timeupdate", this.seekTimeUpdate);
+    // sync map with video
+    this.player.on("play", () => {
+      if (this.isMapActive === 1) {
+        this.refs.googleMap.setRoutes();
+        this.isMapActive = 2;
+      }
+      if (this.isMapActive === 3) {
+        this.refs.googleMap.startMovement();
+        this.isMapActive = 2;
+      }
+    });
+    this.player.on("pause", () => {
+      if (this.isMapActive === 2) {
+        this.refs.googleMap.stopMovement();
+        this.isMapActive = 3;
+      }
+    });
+
+    console.log(this.player);
   }
   setRoutes() {
     // this.refs.googleMap.setRoutes();
-    console.log("this.refs", this.refs);
     if (this.player.userActive_ && this.isMapActive == 1) {
       // Play the video
       this.player.play();
@@ -153,77 +171,77 @@ class CarDetail extends Component {
   }
 
   // Custom control bar start
-  playPause = e => {
-    if (this.player.paused() && this.isMapActive === 1) {
-      this.player.play();
-      e.target.innerHTML = "Paused";
-      // this.refs.googleMap.setRoutes();
-      // this.isMapActive = 2;
-    } else {
-      this.player.pause();
-      e.target.innerHTML = "Play";
-    }
-  };
+  // playPause = e => {
+  //   if (this.player.paused() && this.isMapActive === 1) {
+  //     this.player.play();
+  //     e.target.innerHTML = "Paused";
+  //     // this.refs.googleMap.setRoutes();
+  //     // this.isMapActive = 2;
+  //   } else {
+  //     this.player.pause();
+  //     e.target.innerHTML = "Play";
+  //   }
+  // };
 
-  videoSeek = event => {
-    let val = event.target.value;
-    const player = this.player;
-    // change the value on slide
-    this.setState(prevState => ({
-      controlBar: {
-        ...prevState.controlBar,
-        inputRangeVal: val
-      }
-    }));
+  // videoSeek = event => {
+  //   let val = event.target.value;
+  //   const player = this.player;
+  //   // change the value on slide
+  //   this.setState(prevState => ({
+  //     controlBar: {
+  //       ...prevState.controlBar,
+  //       inputRangeVal: val
+  //     }
+  //   }));
 
-    // Get current time
-    let seekto = player.duration() * (val / 100);
-    player.currentTime(seekto);
-  };
+  //   // Get current time
+  //   let seekto = player.duration() * (val / 100);
+  //   player.currentTime(seekto);
+  // };
 
-  seekTimeUpdate() {
-    const seekslider = document.getElementById("seekslider");
-    const curtimetext = document.getElementById("curtimetext");
-    const durtimetext = document.getElementById("durtimetext");
+  // seekTimeUpdate() {
+  //   const seekslider = document.getElementById("seekslider");
+  //   const curtimetext = document.getElementById("curtimetext");
+  //   const durtimetext = document.getElementById("durtimetext");
 
-    // Sync seekbar with video
-    let newTime = this.currentTime() * (100 / this.duration());
-    seekslider.value = newTime;
+  //   // Sync seekbar with video
+  //   let newTime = this.currentTime() * (100 / this.duration());
+  //   seekslider.value = newTime;
 
-    // Update min to sec and vice versa
-    let curmins = Math.floor(this.currentTime() / 60);
-    let cursecs = Math.floor(this.currentTime() - curmins * 60);
-    let durmins = Math.floor(this.duration() / 60);
-    let dursecs = Math.floor(this.duration() - durmins * 60);
-    if (cursecs < 10) {
-      cursecs = "0" + cursecs;
-    }
-    if (dursecs < 10) {
-      dursecs = "0" + dursecs;
-    }
-    if (curmins < 10) {
-      curmins = "0" + curmins;
-    }
-    if (durmins < 10) {
-      durmins = "0" + durmins;
-    }
+  //   // Update min to sec and vice versa
+  //   let curmins = Math.floor(this.currentTime() / 60);
+  //   let cursecs = Math.floor(this.currentTime() - curmins * 60);
+  //   let durmins = Math.floor(this.duration() / 60);
+  //   let dursecs = Math.floor(this.duration() - durmins * 60);
+  //   if (cursecs < 10) {
+  //     cursecs = "0" + cursecs;
+  //   }
+  //   if (dursecs < 10) {
+  //     dursecs = "0" + dursecs;
+  //   }
+  //   if (curmins < 10) {
+  //     curmins = "0" + curmins;
+  //   }
+  //   if (durmins < 10) {
+  //     durmins = "0" + durmins;
+  //   }
 
-    // update ui
-    curtimetext.innerHTML = `${curmins}:${cursecs}`;
-    durtimetext.innerHTML = `${durmins}:${dursecs}`;
-  }
+  //   // update ui
+  //   curtimetext.innerHTML = `${curmins}:${cursecs}`;
+  //   durtimetext.innerHTML = `${durmins}:${dursecs}`;
+  // }
 
-  fullScreenToggle = event => {
-    const fullscreenbtn = event.target;
-    const player = this.player;
-    if (player.requestFullscreen) {
-      player.requestFullscreen();
-    } else if (player.webkitRequestFullScreen) {
-      player.webkitRequestFullScreen();
-    } else if (player.mozRequestFullScreen) {
-      player.mozRequestFullScreen();
-    }
-  };
+  // fullScreenToggle = event => {
+  //   const fullscreenbtn = event.target;
+  //   const player = this.player;
+  //   if (player.requestFullscreen) {
+  //     player.requestFullscreen();
+  //   } else if (player.webkitRequestFullScreen) {
+  //     player.webkitRequestFullScreen();
+  //   } else if (player.mozRequestFullScreen) {
+  //     player.mozRequestFullScreen();
+  //   }
+  // };
   // Custom control bar end
 
   render() {
@@ -246,7 +264,7 @@ class CarDetail extends Component {
                       controls
                       preload="auto"
                       style={{ width: 100 + "%" }}
-                      data-setup="{}"
+                      data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'
                     />
                   </div>
                 </div>
@@ -255,14 +273,7 @@ class CarDetail extends Component {
             <div
               className="row"
               style={{ marginTop: "-9px", minHeight: "100px" }}
-            >
-              <div className="col-12 d-flex p-0">
-                <button onClick={this.setRoutes}>click me....</button>
-                {/* <button onClick={this.refs.googleMap.stopMovement}>stop....</button>
-            <button onClick={this.refs.googleMap.startMovement}>start....</button> */}
-              </div>
-            </div>
-<<<<<<< Updated upstream
+            />
             <div className="row" style={{ marginTop: "34px", width: "1149px" }}>
               <div className="col-12 d-flex p-0">
                 <LatiLognDetails
@@ -275,51 +286,6 @@ class CarDetail extends Component {
                   Cardetails={this.state.cardata}
                 />
               </div>
-=======
-
-            <div id="video-control-bar">
-              <button id="playpausebtn" onClick={this.playPause}>
-                Play Pause
-              </button>
-              <input
-                id="seekslider"
-                type="range"
-                name="points"
-                min="0"
-                max="100"
-                step="1"
-                value={this.state.controlBar.inputRangeVal}
-                onChange={this.videoSeek}
-              />
-
-              <span id="curtimetext">00:00</span>
-              <span>&nbsp;/&nbsp;</span>
-              <span id="durtimetext"> 00:00 </span>
-              <button id="fullscreenbtn" onClick={this.fullScreenToggle}>
-                [&nbsp;]
-              </button>
-            </div>
-          </div>
-          <div className="row" style={{ marginTop: "34px", width: "1149px" }}>
-            <div className="col-12 d-flex p-0">
-              <LatiLognDetails
-                latlng={this.state.latlng}
-                accidentData={this.state.accidentData}
-              />
-              <GoogleMapComponent
-                ref="googleMap"
-                setLatLng={this.setLatLng}
-                Cardetails={this.state.cardata}
-              />
-            </div>
-          </div>
-          <div className="row charts" style={{ marginTop: "18px" }}>
-            <div className="col-2 donutChart">
-              <DonutChart />
-            </div>
-            <div className="col-2 barChart">
-              <BarChart />
->>>>>>> Stashed changes
             </div>
             <div className="row charts" style={{ marginTop: "18px" }}>
               <div className="donutChart">
