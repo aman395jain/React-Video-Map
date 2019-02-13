@@ -7,6 +7,7 @@ import { FadeLoader } from "react-spinners";
 import tableData from "../../../data/carData.json";
 import Header from "../../../shared/header/header.js";
 import Modalform from "./../forms/modalForm";
+import {} from "./_carManagement.scss";
 
 class UserManagement extends Component {
   state = {
@@ -129,34 +130,37 @@ class UserManagement extends Component {
         </div>
       );
     }
-    return <div className="pt-2">Showing 10 of 150</div>;
+    return <div className="" />;
   }
   render() {
     return (
-      <div className="container">
+      <div className="car-management">
         <Header isAuthorized={this.state.isLogin} />
-        <div className="user-list">
-          <h1>Car Information List</h1>
-          <div className="row">
-            <div className="col-sm-5">{this.renderTableRowActions()}</div>
+        <div className="container">
+          <div className="user-list row">
+            <div className="car-list-header col-md-12">
+              Car Information List
+            </div>
+            <div className="col-md-12 user-list-table-container">
+              <div className="col-md-12">{this.renderTableRowActions()}</div>
+              {this.state.loadingSpinner ? (
+                <div className="col-md-12">
+                  <ReactTable
+                    className="user-list-table table-striped mt-3"
+                    data={this.state.data}
+                    columns={this.userListColumn()}
+                    defaultPageSize={2}
+                    id="table-to-xls"
+                    showPagination={false}
+                  />
+                </div>
+              ) : (
+                <div style={{ position: "absolute", top: "50%", left: "50%" }}>
+                  <FadeLoader height={15} width={5} margin="2px" radius={2} />
+                </div>
+              )}
+            </div>
           </div>
-          {this.state.loadingSpinner ? (
-            <div className="row">
-              <div className="col-12">
-                <ReactTable
-                  className="user-list-table table-striped mt-3"
-                  data={this.state.data}
-                  columns={this.userListColumn()}
-                  defaultPageSize={5}
-                  id="table-to-xls"
-                />
-              </div>
-            </div>
-          ) : (
-            <div style={{ position: "absolute", top: "50%", left: "50%" }}>
-              <FadeLoader height={15} width={5} margin="2px" radius={2} />
-            </div>
-          )}
         </div>
       </div>
     );

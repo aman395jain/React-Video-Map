@@ -62,13 +62,15 @@ class Header extends Component {
     //   pathToExcludeHeader.indexOf(window.location.pathname)
     // );
     // if (pathToExcludeHeader.indexOf(window.location.pathname) >= 0) return null;
-    return (
-      <header className="row align-items-center top-header">
+    /*{<header className="row align-items-center top-header">
         <div className="col-sm-4">
           <img src={logo} alt="Trillium logo" />
         </div>
         {this.renderHdrRight()}
-      </header>
+      </header> }*/
+    return (
+      <div className="col-md-12 car-detail-header">
+        </div>
     );
   }
 }
