@@ -36,6 +36,8 @@ class ModalForm extends React.Component {
 
   onCloseModal = () => {
     this.setState({ open: false });
+    // Redirect to home page
+    window.location = "/";
   };
 
   onModal = () => {

@@ -18,7 +18,7 @@ class CarDetail extends Component {
   state = {
     url:
       "https://www.totaleclips.com/Player/Bounce.aspx?eclipid=e108119&bitrateid=449&vendorid=102&type=.mp4",
-    responseFlag: false,
+    modalFlag: false,
     loadingSpinner: {}
   };
 
@@ -34,7 +34,10 @@ class CarDetail extends Component {
         inputRangeVal: 0
       },
       isActiveCam1: false,
-      isActiveCam2: false
+      isActiveCam2: false,
+      videoEnableFlag: false,
+      mapEnableFlag: false,
+      chartEnableFlag: false
     };
     const id = props.match.params.vin;
     //this.updateVideo("carvin121212_cam1");
@@ -55,23 +58,55 @@ class CarDetail extends Component {
       )
       .then(response => {
         console.log("data", typeof response.data.message);
+        // console.log(
+        //   "data",
+        //   response.data.streamData,
+        //   response.data.gpsData,
+        //   response.data.carSpeedData
+        // );
         this.setState({ loadingSpinner: true });
-        if (
-          response &&
-          response.data &&
-          typeof response.data.message === "undefined"
-        ) {
-          this.setState({ responseFlag: true });
-          this.setState({ cardata: response.data });
-          this.setState({ accidentData: response.data.accidentFlagData[0] });
-          //this.setState({ camdata : response.data.cardata })
-          this.updateVideo("carvin121212_cam1");
+        if (response && response.data) {
+          console.warn(
+            "vccvhckcgvbnm" + " " + typeof response.data.carSpeedData
+          );
+          if (
+            typeof response.data.streamData === "undefined" &&
+            typeof response.data.gpsData === "undefined" &&
+            typeof response.data.carSpeedData === "undefined"
+          ) {
+            this.setState({ modalFlag: false });
+            this.refs.modalform.onOpenModal(this.props.match.params.vin);
+          } else {
+            if (typeof response.data.streamData === "object") {
+              this.setState({ videoEnableFlag: true });
+            } else {
+              this.setState({ videoEnableFlag: false });
+            }
+
+            if (typeof response.data.carSpeedData === "object") {
+              this.setState({ chartEnableFlag: true });
+            } else {
+              this.setState({ chartEnableFlag: false });
+            }
+            // if (typeof response.data.gpsData === "object") {
+            //   this.setState({ mapEnableFlag: true });
+            // } else {
+            //   this.setState({ mapEnableFlag: false });
+            // }
+            this.setState({ modalFlag: true });
+            this.setState({ cardata: response.data });
+            this.setState({ accidentData: response.data.accidentFlagData[0] });
+            //this.setState({ camdata : response.data.cardata })
+            this.updateVideo("carvin121212_cam1");
+          }
         } else {
+          this.setState({ modalFlag: false });
           this.refs.modalform.onOpenModal(this.props.match.params.vin);
         }
       })
       .catch(err => {
         console.log("err" + err);
+        //this.refs.modalform.onOpenModal(this.props.match.params.vin);
       });
   }
   setLatLng(e) {
@@ -168,10 +203,9 @@ class CarDetail extends Component {
   renderSensor(streamData) {
     if (streamData) {
       return streamData.map((data, i) => {
-        let activeClass = i === 0 ? "active" : "";
         i++;
-
-        const classN = `sensor pos-${i}`;
+        let activeClass = i === 1 ? "active" : "";
+        const classN = `sensor pos-${i} ${activeClass}`;
         return (
           <span
             key={i}
@@ -268,60 +302,122 @@ class CarDetail extends Component {
   // };
   // Custom control bar end
 
+  fullScreenToggle = event => {
+    const fullscreenbtn = event.target;
+    const player = this.player;
+    if (player.requestFullscreen) {
+      player.requestFullscreen();
+    } else if (player.webkitRequestFullScreen) {
+      player.webkitRequestFullScreen();
+    } else if (player.mozRequestFullScreen) {
+      player.mozRequestFullScreen();
+    }
+  };
+
+  //render the video and map on flags
+
+  videoRender() {
+    if (this.state.videoEnableFlag) {
+      return (
+        <div>
+          <div className="row ">
+            <div className="col-12 d-flex">
+              <div className="car-image">
+                {this.renderSensor(this.state.cardata.streamData)}
+              </div>
+              <div className="car-video">
+                <div className="car-id">{this.props.match.params.vin}</div>
+                <div className="video-container">
+                  <video
+                    id="car-video"
+                    className="video-js vjs-default-skin"
+                    controls
+                    preload="auto"
+                    style={{ width: 100 + "%" }}
+                    data-setup="{}"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="row"
+            style={{ marginTop: "-9px", minHeight: "100px" }}
+          >
+            {/* <div className="col-12 d-flex p-0">
+              <button onClick={this.setRoutes}>click me....</button>
+            </div> */}
+          </div>
+          <div className="row" style={{ marginTop: "34px", width: "1149px" }}>
+            <div className="col-12 d-flex p-0">
+              <LatiLognDetails
+                latlng={this.state.latlng}
+                accidentData={this.state.accidentData}
+              />
+              <GoogleMapComponent
+                ref="googleMap"
+                setLatLng={this.setLatLng}
+                Cardetails={this.state.cardata}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="row ">
+          <div className="col-12 d-flex video-map-aceess">
+            You don't have access to view the Video and Google Map Content.
+          </div>
+        </div>
+      );
+    }
+  }
+
+  // Chart Render
+
+  chartRender() {
+    if (this.state.chartEnableFlag) {
+      return (
+        <div className="row charts" style={{ marginTop: "18px" }}>
+          <div className="donutChart">
+            <DonutChart />
+          </div>
+          <div className="barChart">
+            <BarChart />
+          </div>
+          <div className="lineChart">
+            <LineChart />
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="row charts chart-aceess">
+          You don't have access to view the Charts.
+        </div>
+      );
+    }
+  }
+
+  // End Chart Render
+
+  // Custom control bar end
+
   render() {
+    // console.warn("videoFlag", this.state.videoEnableFlag);
     return this.state.loadingSpinner ? (
-      this.state.responseFlag ? (
+      this.state.modalFlag ? (
         <div className="car-details">
           <div className="container">
-            <div className="row ">
-              <div className="col-12 d-flex">
-                <div className="car-image">
-                  {this.renderSensor(this.state.cardata.streamData)}
-                </div>
-                <div className="car-video">
-                  <div className="car-id">{this.props.match.params.vin}</div>
-                  {/* <CarVideo videoOptions={this.state.videoJsOptions} /> */}
-                  <div className="video-container">
-                    <video
-                      id="car-video"
-                      className="video-js vjs-default-skin"
-                      controls
-                      preload="auto"
-                      style={{ width: 100 + "%" }}
-                      data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="row"
-              style={{ marginTop: "-9px", minHeight: "100px" }}
-            />
-            <div className="row" style={{ marginTop: "34px", width: "1149px" }}>
-              <div className="col-12 d-flex p-0">
-                <LatiLognDetails
-                  latlng={this.state.latlng}
-                  accidentData={this.state.accidentData}
-                />
-                <GoogleMapComponent
-                  ref="googleMap"
-                  setLatLng={this.setLatLng}
-                  Cardetails={this.state.cardata}
-                />
-              </div>
-            </div>
-            <div className="row charts" style={{ marginTop: "18px" }}>
-              <div className="donutChart">
-                <DonutChart />
-              </div>
-              <div className="barChart">
-                <BarChart />
-              </div>
-              <div className="lineChart">
-                <LineChart />
-              </div>
-            </div>
+            {this.videoRender()}
+
+            {/* Chart Row */}
+
+            {this.chartRender()}
+
+            {/* End of Charts */}
           </div>
         </div>
       ) : (
