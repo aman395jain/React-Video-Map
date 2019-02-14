@@ -20,37 +20,31 @@
       border: 2px solid #ff3b3b;
       cursor: pointer;
       transition: all 0.3s;
+      background-color: #e6761b;
+      border-color: #ffa019;
+      &:hover {
+        background-color: #ff0000;
+        border-color: rgba(253, 160, 160, 0.4);
+      }
       &.active {
-        background-color: #0090a5 !important;
-        border-color: rgba(77, 232, 255, 0.4) !important;
+        background-color: #ff0000;
+        border-color: rgba(253, 160, 160, 0.4);
       }
       &.pos-1 {
         left: 33%;
         top: 45px;
-        background-color: #ff9600;
-        border-color: #ffb346;
-        &:hover {
-          background-color: #0090a5;
-          border-color: rgba(77, 232, 255, 0.4);
-        }
       }
       &.pos-2 {
         left: 33.5%;
         top: 61.5%;
-        background-color: #ff9600;
-        border-color: #ffb346;
-        &:hover {
-          background-color: #0090a5;
-          border-color: rgba(77, 232, 255, 0.4);
-        }
       }
       &.pos-3 {
-        left: 27%;
-        top: 104px;
+        left: 21.5%;
+        top: 121px;
       }
       &.pos-4 {
-        left: 41%;
-        top: 104px;
+        left: 44.5%;
+        top: 120px;
       }
       &.pos-5 {
         left: 41%;
@@ -127,11 +121,10 @@
   }
   .car-id {
     position: absolute;
-    top: -62px;
+    top: -50px;
     width: 275px;
-    right: 34px;
     padding: 10px;
-    text-align: center;
+    color: #fff;
   }
 
   .lat-logn-details {

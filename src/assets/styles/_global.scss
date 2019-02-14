@@ -52,10 +52,6 @@ body {
     .vjs-big-play-button {
       display: none;
     }
-  }
-}
-.car-details {
-  .video-js {
     .vjs-control-bar {
       display: flex !important;
       visibility: visible;
@@ -63,7 +59,7 @@ body {
       transition: visibility 0.1s;
       height: 111px;
       bottom: -141px;
-      width: 1039px;
+      width: 964px;
       left: -203px;
       font-size: 23px;
       align-items: center;
@@ -107,6 +103,18 @@ body {
       }
     }
   }
+  .vjs-icon-replay:before,
+  .video-js .vjs-play-control.vjs-ended .vjs-icon-placeholder:before {
+    content: "\F101";
+  }
+  .vjs-icon-fullscreen-enter:before,
+  .video-js .vjs-fullscreen-control .vjs-icon-placeholder:before {
+    background-color: #4b4d5f;
+    font-size: 25px;
+    padding: 9px;
+    border-radius: 100%;
+    color: #fff;
+  }
 }
 
 .car-details .video-js .vjs-big-play-button .vjs-icon-placeholder:before,
@@ -145,7 +153,7 @@ body {
     width: 168px;
     height: 33px;
   }
-  .btn-access{
+  .btn-access {
     background-color: #f2c419;
     color: #000000;
   }
