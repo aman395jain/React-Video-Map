@@ -380,9 +380,13 @@ class CarDetail extends Component {
     }
   }
 
-  // End Chart Render
-
-  // Custom control bar end
+  componentWillUnmount() {
+    // destroy player on unmount
+    if (this.player) {
+      this.player.dispose();
+      console.log("disposed player");
+    }
+  }
 
   render() {
     // console.warn("videoFlag", this.state.videoEnableFlag);
