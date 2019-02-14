@@ -160,7 +160,7 @@ class userForm extends Component {
                   </div>
                   <div className="col-2">
                     <button
-                      className="access-request-btn btn-cancel"
+                      className={"access-request-btn btn-cancel "  + (this.state.isFormApproved ? '' : 'disabled')}
                       onClick={() => this.updateRejectState()}
                       data-toggle="modal"
                       data-target="#exampleModal1"
@@ -190,7 +190,7 @@ class userForm extends Component {
                   <div className="col-2">
                     <button
                       type="submit"
-                      className="access-request-btn btn-access"
+                      className={"access-request-btn btn-access " + (this.state.isFormApproved ? '' : 'disabled')}
                       data-toggle="modal"
                       data-target="#exampleModal"
                       disabled={!this.state.isFormApproved}

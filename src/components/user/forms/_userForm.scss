@@ -78,19 +78,19 @@
       .text-style-3 {
         color: #e6e4e4;
       }
-      .modal-content{
+      .modal-content {
         border-radius: 6px;
         box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
         background-color: #242939;
         color: #e6e4e4;
-        .modal-header{
+        .modal-header {
           border: none;
         }
       }
     }
-    .custom-align{
+    .custom-align {
       padding: 0 51px 0 30px;
-      .access-request-btn{
+      .access-request-btn {
         border-radius: 4px;
         opacity: 0.9;
         font-family: Roboto;
@@ -105,11 +105,15 @@
         border: 1px solid #f2c419;
         width: 168px;
         height: 33px;
+        cursor: pointer;
       }
       .btn-access {
         background-color: #f2c419;
         color: #000000;
-    }
+      }
+      .disabled{
+        cursor: default;
+      }
     }
   }
 }
