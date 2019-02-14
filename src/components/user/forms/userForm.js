@@ -13,7 +13,7 @@ class userForm extends Component {
       isFormApproved: false
     };
   }
-  updateRejectState = () => {
+  updateRejectState = event => {
     // console.log("ee" + e);
     // this.setState({ isapproved: e });
     // console.log("approved", this.state.isapproved);
@@ -23,13 +23,14 @@ class userForm extends Component {
       isChartsApproved: false,
       isFormApproved: false
     });
-  }
+    this.handleSubmit(event);
+  };
   updateVideoState = () => {
     this.setState({
       isVideoApproved: !this.state.isVideoApproved,
       isMapApproved: !this.state.isMapApproved
     });
-  }
+  };
 
   // updateMapState() {
   //   this.setState({
@@ -40,32 +41,32 @@ class userForm extends Component {
 
   updateChartsState = () => {
     this.setState({ isChartsApproved: !this.state.isChartsApproved });
-  }
+  };
   handleSubmit(e) {
     e.preventDefault();
     console.log("form submit");
-      axios
-        .post(
-          "https://qjn410lo43.execute-api.us-east-1.amazonaws.com/prototype",
-          {
-            vin: this.props.match.params.vin,
-            // permission: this.state.isapproved ? true : false
-            video_enabled: this.state.isVideoApproved ? true : false,
-            map_enabled: this.state.isMapApproved ? true : false,
-            speed_enabled: this.state.isChartsApproved ? true : false
-          }
-        )
-        .then(response => {
-          console.log("response data", response.data);
-        })
-        .catch(err => {
-          console.log("ERROR : " + err);
-        });
+    axios
+      .post(
+        "https://qjn410lo43.execute-api.us-east-1.amazonaws.com/prototype",
+        {
+          vin: this.props.match.params.vin,
+          // permission: this.state.isapproved ? true : false
+          video_enabled: this.state.isVideoApproved ? true : false,
+          map_enabled: this.state.isMapApproved ? true : false,
+          speed_enabled: this.state.isChartsApproved ? true : false
+        }
+      )
+      .then(response => {
+        console.log("response data", response.data);
+      })
+      .catch(err => {
+        console.log("ERROR : " + err);
+      });
   }
 
   updateFormState = () => {
     this.setState({ isFormApproved: !this.state.isFormApproved });
-  }
+  };
   render() {
     console.warn(
       "in video check",
@@ -97,8 +98,8 @@ class userForm extends Component {
               </div>
               <div className="col-md-12 custom-form-modal-content custom-align">
                 <span className="text-style-2 text-style-3">
-                  Car Details: VIN - {this.props.match.params.vin}; Model BMW 3 Series; Year
-                  2002;
+                  Car Details: VIN - {this.props.match.params.vin}; Model BMW 3
+                  Series; Year 2002;
                 </span>
               </div>
               <div className="col-md-12 custom-form-modal-content custom-align">
@@ -160,8 +161,11 @@ class userForm extends Component {
                   </div>
                   <div className="col-2">
                     <button
-                      className={"access-request-btn btn-cancel "  + (this.state.isFormApproved ? '' : 'disabled')}
-                      onClick={() => this.updateRejectState()}
+                      className={
+                        "access-request-btn btn-cancel " +
+                        (this.state.isFormApproved ? "" : "disabled")
+                      }
+                      onClick={e => this.updateRejectState(e)}
                       data-toggle="modal"
                       data-target="#exampleModal1"
                       disabled={!this.state.isFormApproved}
@@ -190,7 +194,10 @@ class userForm extends Component {
                   <div className="col-2">
                     <button
                       type="submit"
-                      className={"access-request-btn btn-access " + (this.state.isFormApproved ? '' : 'disabled')}
+                      className={
+                        "access-request-btn btn-access " +
+                        (this.state.isFormApproved ? "" : "disabled")
+                      }
                       data-toggle="modal"
                       data-target="#exampleModal"
                       disabled={!this.state.isFormApproved}
