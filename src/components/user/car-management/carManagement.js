@@ -83,7 +83,7 @@ class UserManagement extends Component {
       },
       {
         Header: "Date",
-        accessor: "dateTime"
+        accessor: "accDate"
       },
       {
         Header: "VIN",

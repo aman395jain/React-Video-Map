@@ -12,7 +12,15 @@ class LatiLognDetails extends React.Component {
     const ps = new PerfectScrollbar(container);
   }
 
+  accidentalDateFormated(date) {
+    if (typeof date === "undefined") {
+      return date;
+    } else {
+      return date.substring(0, 19);
+    }
+  }
   render() {
+    console.warn("in latlong", this.props.accidentData.formattedDateTime);
     this.state.CarDetails = this.props.latlng;
     console.log("in latlong", this.state);
     return (
@@ -40,7 +48,7 @@ class LatiLognDetails extends React.Component {
                 <div className="col-md-12 lat-long-title-text">20 Oct 2018</div>
               </div>
             </div> */}
-             <div className="col-md-6 lat-long-col">
+            <div className="col-md-6 lat-long-col">
               <div className="row lat-long-padding">
                 <div className="col-md-12 lat-long-title">Logitude</div>
               </div>
@@ -101,7 +109,9 @@ class LatiLognDetails extends React.Component {
               <div className="row">
                 <div className="col-md-12 lat-long-title-text">
                   {this.props.accidentData
-                    ? this.props.accidentData.dateTime
+                    ? this.accidentalDateFormated(
+                        this.props.accidentData.formattedDateTime
+                      )
                     : ""}
                 </div>
               </div>
