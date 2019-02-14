@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import "../../assets/styles/_header.scss";
-import logo from "../../assets/images/header/_trillium-logo.jpg";
 
 const pathToExcludeHeader = ["/", "/signup"];
 
@@ -68,10 +67,7 @@ class Header extends Component {
         </div>
         {this.renderHdrRight()}
       </header> }*/
-    return (
-      <div className="col-md-12 car-detail-header">
-        </div>
-    );
+    return <div className="col-md-12 car-detail-header" />;
   }
 }
 
