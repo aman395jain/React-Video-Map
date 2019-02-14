@@ -80,7 +80,7 @@ class userForm extends Component {
           <form onSubmit={e => this.handleSubmit(e)}>
             <div className="row custom-form-modal">
               <div className="col-md-12 custom-form-modal-header custom-form-modal-content">
-                VIN 1HGBH41JXRQ10156
+                VIN {this.props.match.params.vin}
               </div>
 
               <div className="col-md-12 custom-form-modal-content custom-align">
