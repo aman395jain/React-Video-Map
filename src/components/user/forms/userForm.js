@@ -97,7 +97,7 @@ class userForm extends Component {
               </div>
               <div className="col-md-12 custom-form-modal-content custom-align">
                 <span className="text-style-2 text-style-3">
-                  Car Details: VIN - 1HGBH41JXRQ10156; Model BMW 3 Series; Year
+                  Car Details: VIN - {this.props.match.params.vin}; Model BMW 3 Series; Year
                   2002;
                 </span>
               </div>
