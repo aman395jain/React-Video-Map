@@ -97,7 +97,7 @@ class CarDetail extends Component {
             this.setState({ cardata: response.data });
             this.setState({ accidentData: response.data.accidentFlagData[0] });
             //this.setState({ camdata : response.data.cardata })
-            this.updateVideo("carvin121212_cam1");
+            this.updateVideo(response.data.streamData[0].name);
           }
         } else {
           this.setState({ modalFlag: false });
@@ -151,20 +151,17 @@ class CarDetail extends Component {
     }
     // update seekbar
     // this.player.on("timeupdate", this.seekTimeUpdate);
-    // Pause video if playing
+    // Reload video if camra change
     this.player.pause();
     // sync map with video
-
     this.refs.googleMap.setRoutes();
     this.refs.googleMap.resetStartingPosition();
+    this.refs.googleMap.stopMovement();
     this.setLatLng({ lat: () => 0, lng: () => 0 });
     this.player.on("play", () => {
       if (this.isMapActive === 1) {
         this.refs.googleMap.startAnimation(this.map, 0);
-
-        // this.refs.googleMap.setRoutes();
         this.isMapActive = 2;
-        console.log("playyyyyyyyyyy");
       }
       if (this.isMapActive === 3) {
         this.refs.googleMap.startMovement();
@@ -186,8 +183,12 @@ class CarDetail extends Component {
   renderSensor(streamData) {
     if (streamData) {
       return streamData.map((data, i) => {
+        if (this.props.match.params.vin === "123456") {
+          i++;
+          i++;
+        }
         i++;
-        let activeClass = i === 1 ? "active" : "";
+        let activeClass = i === 1 || i === 3 ? "active" : "";
         const classN = `sensor pos-${i} ${activeClass}`;
         return (
           <span
@@ -304,10 +305,10 @@ class CarDetail extends Component {
           <div className="row ">
             <div className="col-12 d-flex">
               <div className="car-image">
+                <div className="car-id">VIN: {this.props.match.params.vin}</div>
                 {this.renderSensor(this.state.cardata.streamData)}
               </div>
               <div className="car-video">
-                <div className="car-id">{this.props.match.params.vin}</div>
                 <div className="video-container">
                   <video
                     id="car-video"
