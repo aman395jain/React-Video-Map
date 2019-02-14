@@ -60,7 +60,7 @@ export default class GoogleMapComponent extends React.Component {
       fillOpacity: 1,
       fillColor: "blue",
       offset: "5%",
-      zIndex:100,
+      zIndex: 2147483638,
       // rotation: parseInt(heading[i]),
       anchor: new window.google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
     };
@@ -292,18 +292,24 @@ export default class GoogleMapComponent extends React.Component {
       let cardata =
         this.props.Cardetails && this.props.Cardetails.gpsData
           ? this.props.Cardetails.gpsData.map(item => {
-            return {
-              location: new window.google.maps.LatLng(
-                item.latitude,
-                item.longitude
-              ),
-              stopover: false
-            };
-          })
+              return {
+                location: new window.google.maps.LatLng(
+                  item.latitude,
+                  item.longitude
+                ),
+                stopover: false
+              };
+            })
           : [];
-      if (this.props.Cardetails && this.props.Cardetails.accidentFlagData && this.props.Cardetails.accidentFlagData.length > 0) {
-        this.accidentCoordinates = new window.google.maps.LatLng(this.props.Cardetails.accidentFlagData[0].latitude,
-          this.props.Cardetails.accidentFlagData[0].longitude)
+      if (
+        this.props.Cardetails &&
+        this.props.Cardetails.accidentFlagData &&
+        this.props.Cardetails.accidentFlagData.length > 0
+      ) {
+        this.accidentCoordinates = new window.google.maps.LatLng(
+          this.props.Cardetails.accidentFlagData[0].latitude,
+          this.props.Cardetails.accidentFlagData[0].longitude
+        );
       }
       console.log("accidentCoordinates", this.accidentCoordinates);
       this.setState({ routeArray: cardata });
@@ -323,7 +329,7 @@ export default class GoogleMapComponent extends React.Component {
       if (map) {
         this.props.resetMap(map);
         if (this.accidentCoordinates) {
-          this.createMarker(map, this.accidentCoordinates, "", "", 1)
+          this.createMarker(map, this.accidentCoordinates, "", "", 1);
         }
         resolve(map);
       }
@@ -431,7 +437,7 @@ export default class GoogleMapComponent extends React.Component {
       self.startAnimation(routeNum);
       return;
     }
-    return function (response, status) {
+    return function(response, status) {
       // if directions service successfully returns and no polylines exist already, then do the following
       if (status == window.google.maps.DirectionsStatus.ZERO_RESULTS) {
         console.log("No routes available for selected locations");
@@ -461,7 +467,7 @@ export default class GoogleMapComponent extends React.Component {
         var legs = response.routes[0].legs;
         // directionsrenderer renders the directions obtained previously by the directions service
         disp = new window.google.maps.DirectionsRenderer(rendererOptions);
-        
+
         // self.computeTotalDistance(response);
         // let distances = _.flatMap(response.routes, route =>
         //   _.flatMap(route.legs, leg => leg.distance.value)
@@ -523,7 +529,8 @@ export default class GoogleMapComponent extends React.Component {
 
     if (icon == 1) {
       var image = {
-        url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        url:
+          "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
         // This marker is 20 pixels wide by 32 pixels high.
         size: new window.google.maps.Size(20, 32),
         // The origin for this image is (0, 0).
@@ -532,13 +539,12 @@ export default class GoogleMapComponent extends React.Component {
         anchor: new window.google.maps.Point(0, 32)
       };
       options.icon = image;
-
     }
     // using Marker api, marker is created
     var marker = new window.google.maps.Marker(options);
     marker.myname = label;
     // adding click listener to open up info window when marker is clicked
-    window.google.maps.event.addListener(marker, "click", function () {
+    window.google.maps.event.addListener(marker, "click", function() {
       // this.infoWindow.setContent(contentString);
       // this.infoWindow.open(map, marker);
     });
@@ -665,9 +671,7 @@ export default class GoogleMapComponent extends React.Component {
     this.state.timeToTravel = 10;
   }
 
-  calculateTimetotravel(){
-    
-  }
+  calculateTimetotravel() {}
 
   render() {
     return (

@@ -20,15 +20,16 @@
       border: 2px solid #ff3b3b;
       cursor: pointer;
       transition: all 0.3s;
-      background-color: #e6761b;
-      border-color: #ffa019;
+      background-color: #ff0000;
+      border-color: rgba(253, 160, 160, 0.4);
+
       &:hover {
-        background-color: #ff0000;
-        border-color: rgba(253, 160, 160, 0.4);
+        background-color: #e6761b;
+        border-color: #ffa019;
       }
       &.active {
-        background-color: #ff0000;
-        border-color: rgba(253, 160, 160, 0.4);
+        background-color: #e6761b;
+        border-color: #ffa019;
       }
       &.pos-1 {
         left: 33%;

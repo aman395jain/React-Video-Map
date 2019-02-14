@@ -17,14 +17,32 @@ class userForm extends Component {
     // console.log("ee" + e);
     // this.setState({ isapproved: e });
     // console.log("approved", this.state.isapproved);
-    this.setState({
-      isVideoApproved: false,
-      isMapApproved: false,
-      isChartsApproved: false,
-      isFormApproved: false
-    });
-    this.handleSubmit(event);
+
+    //this.handleSubmit(true)
+    /* setTimeout(() => {
+      this.handleSubmit(event);
+    }, 1000); */
+    this.updatestate()
+      .then(res => {
+        console.log("in reject");
+        this.handleSubmit(event);
+      })
+      .catch(err => {
+        console.log("err", err);
+      });
   };
+
+  updatestate() {
+    return new Promise((resolve, reject) => {
+      this.setState({
+        isVideoApproved: false,
+        isMapApproved: false,
+        isChartsApproved: false,
+        isFormApproved: false
+      });
+      resolve();
+    });
+  }
   updateVideoState = () => {
     this.setState({
       isVideoApproved: !this.state.isVideoApproved,
@@ -98,8 +116,7 @@ class userForm extends Component {
               </div>
               <div className="col-md-12 custom-form-modal-content custom-align">
                 <span className="text-style-2 text-style-3">
-                  Car Details: VIN - {this.props.match.params.vin}; Model BMW 3
-                  Series; Year 2002;
+                  Car Details: VIN - {this.props.match.params.vin}
                 </span>
               </div>
               <div className="col-md-12 custom-form-modal-content custom-align">
