@@ -36,3 +36,80 @@
     margin-left: 5%;
   }
 }
+
+.custom-form-modal-theme {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #e6e4e4;
+  .custom-form-header {
+    font-size: 28px;
+    padding: 29px 0 28px 0;
+  }
+  .custom-form-modal {
+    border-radius: 6px;
+    box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
+    background-color: #242939;
+    width: 1152px;
+    height: 467px;
+    .custom-form-modal-header {
+      padding: 41px 0 27px 30px;
+      font-weight: 500;
+    }
+    .custom-form-modal-content {
+      font-family: Roboto;
+      font-size: 17px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.18;
+      letter-spacing: normal;
+      color: #ffffff;
+      .text-style-1 {
+        font-weight: bold;
+      }
+      .text-style-2 {
+        font-weight: 500;
+      }
+      .text-style-3 {
+        color: #e6e4e4;
+      }
+      .modal-content{
+        border-radius: 6px;
+        box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
+        background-color: #242939;
+        color: #e6e4e4;
+        .modal-header{
+          border: none;
+        }
+      }
+    }
+    .custom-align{
+      padding: 0 51px 0 30px;
+      .access-request-btn{
+        border-radius: 4px;
+        opacity: 0.9;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #f2c419;
+        background-color: #3f465b;
+        border: 1px solid #f2c419;
+        width: 168px;
+        height: 33px;
+      }
+      .btn-access {
+        background-color: #f2c419;
+        color: #000000;
+    }
+    }
+  }
+}

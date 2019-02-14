@@ -81,7 +81,7 @@ class ModalForm extends React.Component {
                       className="access-request-btn btn-access"
                       onClick={() => this.openPermissionForm()}
                     >
-                      ACCESS REQUEST
+                      REQUEST ACCESS
                     </button>
                   </div>
                 </div>
